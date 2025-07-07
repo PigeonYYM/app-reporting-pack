@@ -52,7 +52,7 @@ supported_api_versions="17 18 19"
 quiet="n"
 generate_config_only="n"
 validate_ads_config="n"
-modules="core,assets,disapprovals,ios_skan,geo"
+modules="core,assets,disapprovals,ios_skan,geo,aggregate"
 incremental="y"
 backfill="y"
 
