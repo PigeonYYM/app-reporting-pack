@@ -38,7 +38,7 @@ AS (
        VD.video_title AS video_title,
        VD.clicks AS clicks,
        VD.impressions AS impressions,
-       VD.cost AS cost,
+       ROUND(IEEE_DIVIDE(CAST(VD.cost AS FLOAT64), 1000000.0), 3) AS cost,
        VD.conversions AS conversions,
        VD.view_through_conversions AS view_through_conversions,
        VD.conversions_value AS conversions_value,
