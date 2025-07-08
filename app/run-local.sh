@@ -480,6 +480,13 @@ run_with_config() {
     run_bq_queries "ios_skan"
     fi
   fi
+  if [[ $modules =~ "aggregate" ]]; then
+    echo -e "${COLOR}===Running 'aggregate' module===${NC}"
+    check_initial_load "aggregate_performance"
+    check_missing_incremental_snapshot "aggregate_performance"
+    define_runtime_config "aggregate_performance"
+    run_bq_queries "aggregate"
+  fi
   upload_last_run_to_bq
 }
 
