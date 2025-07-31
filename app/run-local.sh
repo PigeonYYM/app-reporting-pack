@@ -153,6 +153,9 @@ reset_snapshot_data() {
     if [[ $modules =~ "ios_skan" ]]; then
       delete_incremental_snapshots "skan_decoder"
     fi
+    if [[ $modules =~ "aggregate" ]]; then
+      delete_incremental_snapshots "aaggregate_performance"
+    fi
     echo -e "${COLOR}Incremental performance snapshots were removed${NC}"
     if [[ $quiet = "y" ]]; then
       proceed_after_resetting_snapshots="y"

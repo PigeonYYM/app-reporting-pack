@@ -43,10 +43,10 @@ AS (
        VD.view_through_conversions AS view_through_conversions,
        VD.conversions_value AS conversions_value,
        VD.video_views AS video_views,
-       VD.p100_views_rate * VD.video_views AS p100_views,
-       VD.p25_views_rate * VD.video_views AS p25_views,
-       VD.p50_views_rate * VD.video_views AS p50_views,
-       VD.p75_views_rate * VD.video_views AS p75_views
+       VD.p100_views_rate * VD.impressions AS p100_views,
+       VD.p25_views_rate * VD.impressions AS p25_views,
+       VD.p50_views_rate * VD.impressions AS p50_views,
+       VD.p75_views_rate * VD.impressions AS p75_views
        from `{bq_dataset}.video` VD
        left join `MappingTable` AD
        on AD.ad_id = VD.ad_id
