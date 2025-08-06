@@ -23,6 +23,7 @@ AS (
     RawConversionIds AS (
       SELECT
         ACS.campaign_id,
+        ACS.campaign_type,
         ACS.campaign_sub_type,
         ACS.app_id,
         ACS.app_store,
@@ -95,6 +96,7 @@ AS (
     )
   SELECT
     R.campaign_id,
+    ANY_VALUE(R.campaign_type) AS campaign_type,
     ANY_VALUE(R.campaign_sub_type) AS campaign_sub_type,
     ANY_VALUE(R.app_id) AS app_id,
     ANY_VALUE(R.app_store) AS app_store,

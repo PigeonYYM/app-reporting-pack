@@ -177,7 +177,7 @@ AS (
     M.campaign_id,
     M.campaign_name,
     M.campaign_status,
-    ACS.campaign_sub_type,
+    ACS.campaign_type,
     IFNULL(G.geos, 'All') AS geos,
     IFNULL(G.languages, 'All') AS languages,
     ACS.app_id,

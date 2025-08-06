@@ -14,6 +14,7 @@
 
 SELECT
     campaign.id AS campaign_id,
+    campaign.advertising_channel_type AS campaign_type,
     campaign.advertising_channel_sub_type AS campaign_sub_type,
     campaign.app_campaign_setting.app_id AS app_id,
     campaign.app_campaign_setting.app_store AS app_store,
