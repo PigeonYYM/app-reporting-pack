@@ -9,4 +9,4 @@ SELECT customer.id AS account_id,
        ad_group_ad.ad.name AS ad_name
 FROM ad_group_ad
 WHERE
-    campaign.advertising_channel_type = "VIDEO"
+    campaign.advertising_channel_type in ("VIDEO", "DISPLAY")

@@ -34,6 +34,6 @@ SELECT
   metrics.video_quartile_p75_rate AS p75_views_rate
 FROM video
 WHERE
-    campaign.advertising_channel_type = "VIDEO"
+    campaign.advertising_channel_type in ("VIDEO", "DISPLAY")
     AND segments.date >= "{start_date}"
     AND segments.date <= "{end_date}"

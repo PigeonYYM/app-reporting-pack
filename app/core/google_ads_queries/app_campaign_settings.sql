@@ -21,4 +21,4 @@ SELECT
     campaign.start_date AS start_date,
     campaign.selective_optimization.conversion_actions AS target_conversions
 FROM campaign
-WHERE campaign.advertising_channel_type = "MULTI_CHANNEL"
+WHERE campaign.advertising_channel_type in ("MULTI_CHANNEL", "DEMAND_GEN", "SEARCH")

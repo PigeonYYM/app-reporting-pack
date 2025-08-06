@@ -118,7 +118,7 @@ case $1 in
 done
 
 # Specify customer ids query that fetch data only from accounts that have at least one app campaign in them.
-customer_ids_query='SELECT customer.id FROM campaign WHERE campaign.advertising_channel_type = "MULTI_CHANNEL"'
+customer_ids_query='SELECT customer.id FROM campaign WHERE campaign.advertising_channel_type in ("MULTI_CHANNEL", "DEMAND_GEN", "SEARCH", "VIDEO", "DISPLAY")'
 
 if [[ ! -z $api_version ]]; then
   validate_api_version $api_version
