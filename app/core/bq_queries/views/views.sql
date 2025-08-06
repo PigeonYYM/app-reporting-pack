@@ -57,7 +57,7 @@ AS (
         M.conversion_name
       FROM
         `{bq_dataset}.app_campaign_settings` AS ACS,
-        UNNEST(SPLIT(ACS.target_conversions, '|')) AS conversion_ids
+        UNNEST(IFNULL(SPLIT(ACS.target_conversions, '|'), ['__NO_CONVERSION'])) AS conversion_ids
       LEFT JOIN `{bq_dataset}.app_conversions_mapping` AS M
         ON
           SPLIT(conversion_ids, '/')[SAFE_OFFSET(3)]
