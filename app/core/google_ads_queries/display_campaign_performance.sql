@@ -8,15 +8,15 @@ SELECT segments.date AS date,
     ad_group.id AS ad_group_id,
     ad_group.name AS ad_group_name,
     ad_group_ad.ad.id AS ad_id,
-    ad_group_ad.ad.name AS ad_name
+    ad_group_ad.ad.name AS ad_name,
     metrics.clicks AS clicks,
     metrics.cost_micros AS cost,
     metrics.impressions AS impressions,
     metrics.video_views AS video_views,
-    metrics.video_quartile_p25_rate AS p25_video_views,
-    metrics.video_quartile_p50_rate AS p50_video_views,
-    metrics.video_quartile_p75_rate AS p75_video_views,
-    metrics.video_quartile_p100_rate AS p100_video_views
+    metrics.video_quartile_p25_rate AS p25_views_rate,
+    metrics.video_quartile_p50_rate AS p50_views_rate,
+    metrics.video_quartile_p75_rate AS p75_views_rate,
+    metrics.video_quartile_p100_rate AS p100_views_rate
 FROM ad_group_ad
 WHERE campaign.advertising_channel_type = 'DISPLAY'
   AND segments.date >= "{start_date}"

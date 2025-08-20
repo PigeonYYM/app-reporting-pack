@@ -3,11 +3,12 @@ CREATE OR REPLACE TABLE `{target_dataset}.display_asset_performance_{date_iso}`
 {% else %}
 CREATE OR REPLACE TABLE `{target_dataset}.display_asset_performance`
 {% endif %}
+AS (
        select
        DIS.date AS date,
        DIS.account_id AS account_id,
        DIS.account_name AS account_name,
-       O.currency AS currency,
+       DIS.currency AS currency,
        O.ocid AS ocid,
        DIS.campaign_id AS campaign_id,
        DIS.campaign_name AS campaign_name,
