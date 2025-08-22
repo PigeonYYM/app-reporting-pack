@@ -1,9 +1,34 @@
-{% if incremental == "true" %}
-CREATE OR REPLACE TABLE `{target_dataset}.aggregate_asset_performance_{date_iso}`
-{% else %}
-CREATE OR REPLACE TABLE `{target_dataset}.aggregate_asset_performance`
-{% endif %}
-AS (
+DECLARE create_sql STRING;
+DECLARE has_asset BOOL DEFAULT FALSE;
+DECLARE has_video BOOL DEFAULT FALSE;
+DECLARE has_display BOOL DEFAULT FALSE;
+
+DECLARE target_table STRING DEFAULT '{% if incremental == "true" %}{target_dataset}.aggregate_asset_performance_{date_iso}{% else %}{target_dataset}.aggregate_asset_performance{% endif %}';
+DECLARE asset_table STRING DEFAULT '{% if incremental == "true" %}{target_dataset}.asset_performance_{date_iso}{% else %}{target_dataset}.asset_performance{% endif %}';
+DECLARE video_table STRING DEFAULT '{% if incremental == "true" %}{target_dataset}.video_campaign_asset_performance_{date_iso}{% else %}{target_dataset}.video_campaign_asset_performance{% endif %}';
+DECLARE display_table STRING DEFAULT '{% if incremental == "true" %}{target_dataset}.display_asset_performance_{date_iso}{% else %}{target_dataset}.display_asset_performance{% endif %}';
+
+DECLARE asset_table_name STRING DEFAULT '{% if incremental == "true" %}asset_performance_{date_iso}{% else %}asset_performance{% endif %}';
+DECLARE video_table_name STRING DEFAULT '{% if incremental == "true" %}video_campaign_asset_performance_{date_iso}{% else %}video_campaign_asset_performance{% endif %}';
+DECLARE display_table_name STRING DEFAULT '{% if incremental == "true" %}display_asset_performance_{date_iso}{% else %}display_asset_performance{% endif %}';
+
+DECLARE base_added STRING DEFAULT '';
+
+SET has_asset = EXISTS (
+  SELECT 1 FROM `{target_dataset}.INFORMATION_SCHEMA.TABLES` WHERE table_name = asset_table_name
+);
+SET has_video = EXISTS (
+  SELECT 1 FROM `{target_dataset}.INFORMATION_SCHEMA.TABLES` WHERE table_name = video_table_name
+);
+SET has_display = EXISTS (
+  SELECT 1 FROM `{target_dataset}.INFORMATION_SCHEMA.TABLES` WHERE table_name = display_table_name
+);
+
+SET create_sql = 'CREATE OR REPLACE TABLE `' || target_table || '` AS (';
+
+IF has_asset THEN
+  SET base_added = 'asset';
+  SET create_sql = create_sql || '''
 
 SELECT
     day AS date,
@@ -78,11 +103,170 @@ SELECT
     NULL AS p50_views,
     NULL AS p75_views
 FROM
-{% if incremental == "true" %}
-`{target_dataset}.asset_performance_{date_iso}`
-{% else %}
-`{target_dataset}.asset_performance`
-{% endif %}
+`''' || asset_table || '''`
+''';
+ELSEIF has_video THEN
+  SET base_added = 'video';
+  SET create_sql = create_sql || '''
+
+SELECT
+    PARSE_DATE('%F', date) AS date,
+    CAST(account_id AS STRING) AS account_id,
+    account_name AS account_name,
+    ocid AS ocid,
+    currency AS currency,
+    CAST(campaign_id AS STRING) AS campaign_id,
+    campaign_name AS campaign_name,
+    NULL AS campaign_status,
+    'VIDEO' AS campaign_type,
+    NULL AS geos,
+    NULL AS language,
+    NULL AS app_id,
+    NULL AS app_store,
+    NULL AS bidding_strategy,
+    NULL AS target_conversions,
+    NULL AS firebase_bidding_status,
+    CAST(ad_group_id AS STRING) AS ad_group_id,
+    ad_group_name AS ad_group_name,
+    NULL AS ad_group_status,
+    CAST(ad_id AS STRING) AS ad_id,
+    ad_name AS ad_name,
+    NULL AS asset_id,
+    NULL AS asset,
+    NULL AS asset_link,
+    NULL AS asset_preview_link,
+    NULL AS asset_orientation,
+    CAST(video_id AS STRING) AS video_id,
+    video_title AS video_title,
+    NULL AS video_duration,
+    NULL AS video_aspect_ratio,
+    NULL AS asset_type,
+    NULL AS field_type,
+    NULL AS performance_label,
+    NULL AS asset_status,
+    NULL AS asset_dimensions,
+    NULL AS network,
+    clicks AS clicks,
+    impressions AS impressions,
+    cost AS cost,
+    NULL AS campaign_cost,
+    NULL AS cost_non_install_campaigns,
+    conversions AS conversions,
+    NULL AS installs,
+    NULL AS installs_adjusted,
+    NULL AS inapps,
+    NULL AS inapps_adjusted,
+    view_through_conversions AS view_through_conversions,
+    conversions_value AS conversions_value,
+    NULL AS installs_1_day,
+    NULL AS inapps_1_day,
+    NULL AS conversions_value_1_day,
+    NULL AS installs_3_day,
+    NULL AS inapps_3_day,
+    NULL AS conversions_value_3_day,
+    NULL AS installs_5_day,
+    NULL AS inapps_5_day,
+    NULL AS conversions_value_5_day,
+    NULL AS installs_7_day,
+    NULL AS inapps_7_day,
+    NULL AS conversions_value_7_day,
+    NULL AS installs_14_day,
+    NULL AS inapps_14_day,
+    NULL AS conversions_value_14_day,
+    NULL AS installs_30_day,
+    NULL AS inapps_30_day,
+    NULL AS conversions_value_30_day,
+    video_views AS video_views,
+    p100_views AS p100_views,
+    p25_views AS p25_views,
+    p50_views AS p50_views,
+    p75_views AS p75_views
+FROM
+`''' || video_table || '''`
+''';
+ELSEIF has_display THEN
+  SET base_added = 'display';
+  SET create_sql = create_sql || '''
+
+SELECT
+    PARSE_DATE('%F', date) AS date,
+    CAST(account_id AS STRING) AS account_id,
+    account_name AS account_name,
+    ocid AS ocid,
+    currency AS currency,
+    CAST(campaign_id AS STRING) AS campaign_id,
+    campaign_name AS campaign_name,
+    NULL AS campaign_status,
+    'DISPLAY' AS campaign_type,
+    NULL AS geos,
+    NULL AS language,
+    NULL AS app_id,
+    NULL AS app_store,
+    NULL AS bidding_strategy,
+    NULL AS target_conversions,
+    NULL AS firebase_bidding_status,
+    CAST(ad_group_id AS STRING) AS ad_group_id,
+    ad_group_name AS ad_group_name,
+    NULL AS ad_group_status,
+    CAST(ad_id AS STRING) AS ad_id,
+    ad_name AS ad_name,
+    NULL AS asset_id,
+    NULL AS asset,
+    NULL AS asset_link,
+    NULL AS asset_preview_link,
+    NULL AS asset_orientation,
+    NULL AS video_id,
+    NULL AS video_title,
+    NULL AS video_duration,
+    NULL AS video_aspect_ratio,
+    NULL AS asset_type,
+    NULL AS field_type,
+    NULL AS performance_label,
+    NULL AS asset_status,
+    NULL AS asset_dimensions,
+    NULL AS network,
+    clicks AS clicks,
+    impressions AS impressions,
+    cost AS cost,
+    NULL AS campaign_cost,
+    NULL AS cost_non_install_campaigns,
+    NULL AS conversions,
+    NULL AS installs,
+    NULL AS installs_adjusted,
+    NULL AS inapps,
+    NULL AS inapps_adjusted,
+    NULL AS view_through_conversions,
+    NULL AS conversions_value,
+    NULL AS installs_1_day,
+    NULL AS inapps_1_day,
+    NULL AS conversions_value_1_day,
+    NULL AS installs_3_day,
+    NULL AS inapps_3_day,
+    NULL AS conversions_value_3_day,
+    NULL AS installs_5_day,
+    NULL AS inapps_5_day,
+    NULL AS conversions_value_5_day,
+    NULL AS installs_7_day,
+    NULL AS inapps_7_day,
+    NULL AS conversions_value_7_day,
+    NULL AS installs_14_day,
+    NULL AS inapps_14_day,
+    NULL AS conversions_value_14_day,
+    NULL AS installs_30_day,
+    NULL AS inapps_30_day,
+    NULL AS conversions_value_30_day,
+    video_views AS video_views,
+    p100_views AS p100_views,
+    p25_views AS p25_views,
+    p50_views AS p50_views,
+    p75_views AS p75_views
+FROM
+`''' || display_table || '''`
+''';
+END IF;
+
+IF has_video AND base_added != 'video' THEN
+  SET create_sql = create_sql || '''
 
 UNION ALL
 
@@ -159,11 +343,12 @@ SELECT
     p50_views AS p50_views,
     p75_views AS p75_views
 FROM
-{% if incremental == "true" %}
-`{target_dataset}.video_campaign_asset_performance_{date_iso}`
-{% else %}
-`{target_dataset}.video_campaign_asset_performance`
-{% endif %}
+`''' || video_table || '''`
+''';
+END IF;
+
+IF has_display AND base_added != 'display' THEN
+  SET create_sql = create_sql || '''
 
 UNION ALL
 
@@ -194,8 +379,8 @@ SELECT
     NULL AS asset_link,
     NULL AS asset_preview_link,
     NULL AS asset_orientation,
-    CAST(video_id AS STRING) AS video_id,
-    video_title AS video_title,
+    NULL AS video_id,
+    NULL AS video_title,
     NULL AS video_duration,
     NULL AS video_aspect_ratio,
     NULL AS asset_type,
@@ -240,10 +425,90 @@ SELECT
     p50_views AS p50_views,
     p75_views AS p75_views
 FROM
-{% if incremental == "true" %}
-`{target_dataset}.display_asset_performance_{date_iso}`
-{% else %}
-`{target_dataset}.display_asset_performance`
-{% endif %}
+`''' || display_table || '''`
+''';
+END IF;
 
-);
+IF base_added = '' THEN
+  -- No source tables exist; create an empty table with expected schema
+  SET create_sql = create_sql || '''
+
+SELECT
+    CAST(NULL AS DATE) AS date,
+    CAST(NULL AS STRING) AS account_id,
+    CAST(NULL AS STRING) AS account_name,
+    CAST(NULL AS STRING) AS ocid,
+    CAST(NULL AS STRING) AS currency,
+    CAST(NULL AS STRING) AS campaign_id,
+    CAST(NULL AS STRING) AS campaign_name,
+    CAST(NULL AS STRING) AS campaign_status,
+    CAST(NULL AS STRING) AS campaign_type,
+    CAST(NULL AS STRING) AS geos,
+    CAST(NULL AS STRING) AS language,
+    CAST(NULL AS STRING) AS app_id,
+    CAST(NULL AS STRING) AS app_store,
+    CAST(NULL AS STRING) AS bidding_strategy,
+    CAST(NULL AS STRING) AS target_conversions,
+    CAST(NULL AS STRING) AS firebase_bidding_status,
+    CAST(NULL AS STRING) AS ad_group_id,
+    CAST(NULL AS STRING) AS ad_group_name,
+    CAST(NULL AS STRING) AS ad_group_status,
+    CAST(NULL AS STRING) AS ad_id,
+    CAST(NULL AS STRING) AS ad_name,
+    CAST(NULL AS STRING) AS asset_id,
+    CAST(NULL AS STRING) AS asset,
+    CAST(NULL AS STRING) AS asset_link,
+    CAST(NULL AS STRING) AS asset_preview_link,
+    CAST(NULL AS STRING) AS asset_orientation,
+    CAST(NULL AS STRING) AS video_id,
+    CAST(NULL AS STRING) AS video_title,
+    CAST(NULL AS INT64) AS video_duration,
+    CAST(NULL AS INT64) AS video_aspect_ratio,
+    CAST(NULL AS STRING) AS asset_type,
+    CAST(NULL AS STRING) AS field_type,
+    CAST(NULL AS STRING) AS performance_label,
+    CAST(NULL AS STRING) AS asset_status,
+    CAST(NULL AS STRING) AS asset_dimensions,
+    CAST(NULL AS STRING) AS network,
+    CAST(NULL AS INT64) AS clicks,
+    CAST(NULL AS INT64) AS impressions,
+    CAST(NULL AS FLOAT64) AS cost,
+    CAST(NULL AS FLOAT64) AS campaign_cost,
+    CAST(NULL AS FLOAT64) AS cost_non_install_campaigns,
+    CAST(NULL AS INT64) AS conversions,
+    CAST(NULL AS INT64) AS installs,
+    CAST(NULL AS INT64) AS installs_adjusted,
+    CAST(NULL AS INT64) AS inapps,
+    CAST(NULL AS INT64) AS inapps_adjusted,
+    CAST(NULL AS INT64) AS view_through_conversions,
+    CAST(NULL AS FLOAT64) AS conversions_value,
+    CAST(NULL AS INT64) AS installs_1_day,
+    CAST(NULL AS INT64) AS inapps_1_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_1_day,
+    CAST(NULL AS INT64) AS installs_3_day,
+    CAST(NULL AS INT64) AS inapps_3_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_3_day,
+    CAST(NULL AS INT64) AS installs_5_day,
+    CAST(NULL AS INT64) AS inapps_5_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_5_day,
+    CAST(NULL AS INT64) AS installs_7_day,
+    CAST(NULL AS INT64) AS inapps_7_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_7_day,
+    CAST(NULL AS INT64) AS installs_14_day,
+    CAST(NULL AS INT64) AS inapps_14_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_14_day,
+    CAST(NULL AS INT64) AS installs_30_day,
+    CAST(NULL AS INT64) AS inapps_30_day,
+    CAST(NULL AS FLOAT64) AS conversions_value_30_day,
+    CAST(NULL AS FLOAT64) AS video_views,
+    CAST(NULL AS FLOAT64) AS p100_views,
+    CAST(NULL AS FLOAT64) AS p25_views,
+    CAST(NULL AS FLOAT64) AS p50_views,
+    CAST(NULL AS FLOAT64) AS p75_views
+WHERE FALSE
+''';
+END IF;
+
+SET create_sql = create_sql || '\n\n);';
+
+EXECUTE IMMEDIATE create_sql;
