@@ -18,7 +18,7 @@ SELECT
     account_name AS AccountName,
     account_id,
     ocid AS CID,
-    campaign_sub_type AS CampaignSubType,
+    campaign_type AS CampaignSubType,
     CASE app_store
         WHEN 'GOOGLE_APP_STORE' THEN 'Google Play'
         WHEN 'APPLE_APP_STORE' THEN 'App Store'
