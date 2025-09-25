@@ -26,6 +26,7 @@ usage="bash run-local.sh -c|--config <config> -q|--quiet\n\n
 Helper script for running App Reporting Pack queries.\n\n
 -h|--help - show this help message\n
 -c|--config <config> - path to config.yaml file, i.e., path/to/app_reporting_pack.yaml\n
+-a|--account-id <MMC> - MCC / Child account ids\n
 -q|--quiet - skips all confirmation prompts and starts running scripts based on config files\n
 -g|--google-ads-config - path to google-ads.yaml file (by default it expects it in $HOME directory)\n
 -l|--loglevel - loglevel (DEBUG, INFO, WARNING, ERROR), INFO by default.\n
@@ -75,6 +76,10 @@ case $1 in
     shift
     ads_config=$1
     ;;
+  -a|--account-id)
+    shift
+    customer_id=$1
+    ;;
   --legacy)
     legacy="y"
     ;;
@@ -122,12 +127,6 @@ customer_ids_query='SELECT customer.id FROM campaign WHERE campaign.advertising_
 
 if [[ ! -z $api_version ]]; then
   validate_api_version $api_version
-fi
-
-if [[ $API_VERSION -gt 16 ]]; then
-  skan_fine="true"
-else
-  skan_fine="false"
 fi
 
 reset_snapshot_data() {
@@ -221,7 +220,6 @@ setup() {
 
     if [[ $modules =~ "assets" ]]; then
       ask_for_cohorts
-      ask_for_video_orientation
     fi
     if [[ $modules =~ "ios_skan" ]]; then
       ask_for_skan_queries
@@ -251,15 +249,12 @@ setup() {
       fetch_reports $save_config --log=$loglevel \
         --api-version=$API_VERSION \
         --dry-run \
-        --macro.initial_load_date=$initial_load_date \
-        --template.skan_fine="$skan_fine"
+        --macro.initial_load_date=$initial_load_date
     else
-      echo "Skan: $skan_fine"
       fetch_reports $save_config \
         --log=$loglevel \
         --api-version=$API_VERSION \
-        --dry-run \
-        --template.skan_fine="$skan_fine"
+        --dry-run
     fi
     generate_output_tables $save_config --log=$loglevel --dry-run
     if [[ $skan_answer = "y" ]]; then
@@ -295,14 +290,12 @@ setup() {
       fetch_reports $save_config --log=$loglevel \
         --api-version=$API_VERSION \
         --dry-run \
-        --macro.initial_load_date=$initial_load_date \
-        --template.skan_fine="$skan_fine"
+        --macro.initial_load_date=$initial_load_date
   else
       fetch_reports $save_config --log=$loglevel \
         --api-version=$API_VERSION \
         --dry-run \
-        --macro.initial_load_date=$initial_load_date \
-        --template.skan_fine="$skan_fine"
+        --macro.initial_load_date=$initial_load_date
   fi
   generate_output_tables $save_config --log=$loglevel --dry-run
   if [[ $skan_answer = "y" ]]; then
@@ -514,7 +507,9 @@ bq_dataset_location="US"
 gcloud_project=`gcloud config get-value project 2>/dev/null || echo`
 project=${GOOGLE_CLOUD_PROJECT:-$gcloud_project}
 parse_yaml $ads_config "GOOGLE_ADS_"
-customer_id=$GOOGLE_ADS_login_customer_id
+if [ -z $customer_id ]; then
+  customer_id=$GOOGLE_ADS_login_customer_id
+fi
 video_parsing_mode_output="placeholders"
 cohorts_final="1,3,5,7,14,30"
 skan_schema_mode="placeholders"

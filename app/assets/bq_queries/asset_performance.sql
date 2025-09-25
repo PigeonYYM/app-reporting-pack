@@ -124,6 +124,7 @@ AS (
         ANY_VALUE(youtube_video_title) AS youtube_video_title,
         ANY_VALUE(url) AS url,
         ANY_VALUE(youtube_video_id) AS youtube_video_id,
+        ANY_VALUE(deep_link_uri) AS deep_link_uri,
         ANY_VALUE(height) AS height,
         ANY_VALUE(width) AS width
       FROM `{bq_dataset}.asset_mapping`
@@ -194,14 +195,16 @@ AS (
       WHEN 'IMAGE' THEN A.asset_name
       WHEN 'MEDIA_BUNDLE' THEN A.asset_name
       WHEN 'YOUTUBE_VIDEO' THEN A.youtube_video_title
+      WHEN 'APP_DEEP_LINK' THEN A.deep_link_uri
       ELSE NULL
       END AS asset,
     CASE A.type
       WHEN 'TEXT' THEN ''
       WHEN 'IMAGE' THEN A.url
-      WHEN 'MEDIA_BUNDLE' THEN A.url
+      WHEN 'MEDIA_BUNDLE' THEN ''
       WHEN 'YOUTUBE_VIDEO'
         THEN CONCAT('https://www.youtube.com/watch?v=', A.youtube_video_id)
+      WHEN 'APP_DEEP_LINK' THEN A.deep_link_uri
       ELSE NULL
       END AS asset_link,
     CASE A.type
