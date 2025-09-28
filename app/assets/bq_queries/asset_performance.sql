@@ -249,7 +249,7 @@ AS (
         0,
         `{bq_dataset}.NormalizeMillis`(AP.cost))) AS cost_non_install_campaigns,
     SUM(
-       IF(ACS.bidding_strategy = 'Installs', AP.installs, IF(ACS.campaign_type = 'MULTI_CHANNEL', AP.inapps, AP.conversions))
+       IF(ACS.campaign_type = 'MULTI_CHANNEL', IF(ACS.bidding_strategy = 'Installs', AP.installs, AP.inapps), AP.conversions)
        )
       AS conversions,
     SUM(AP.installs) AS installs,
