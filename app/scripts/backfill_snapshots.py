@@ -61,7 +61,7 @@ def get_new_date_for_missing_incremental_snapshots(
   base_output_table_id = (
     f'{bigquery_executor.project}.{bq_dataset}_output.{table_name}'
   )
-  query = f'SELECT TABLE_SUFFIX, new_start_date FROM `{base_table_id}_missing`',
+  query = f'SELECT TABLE_SUFFIX, new_start_date FROM `{base_table_id}_missing`'
   with contextlib.suppress(bq_executor.BigQueryExecutorError):
     result = bigquery_executor.execute(
       title='missing_incremental_snapshot',
