@@ -27,7 +27,11 @@ If you're running on a local machine you can omit `-L` flag and then the link wi
 ./create_dashboard.sh -p <YOUR_BQ_PROJECT_ID> -d <YOUR_BQ_DATASET_ID>
 ```
 
-where YOUR_BQ_PROJECT_ID and YOUR_BQ_DATASET_ID are the names of the BQ project and dataset that contains App Reporting Pack data.\
+where YOUR_BQ_PROJECT_ID and YOUR_BQ_DATASET_ID are the names of the BQ project and dataset that contains App Reporting Pack data.
+
+!!!important
+    `YOUR_BQ_DATASET_ID` should have suffix `_output` (i.e. `arp_output`) - that where
+    dashboard expects data to be found.
 
 You can provide optional arguments to the script:
 

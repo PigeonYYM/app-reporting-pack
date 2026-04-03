@@ -20,7 +20,7 @@ from docker.types import Mount
 
 
 default_args = {
-    'description'           : 'https://github.com/google/app-reporting-pack',
+    'description'           : 'https://github.com/google-marketing-solutions/app-reporting-pack',
     'depend_on_past'        : False,
     'start_date'            : datetime(2023, 3, 1),
     'email_on_failure'      : False,
@@ -76,7 +76,7 @@ from docker.types import Mount
 
 
 default_args = {
-    'description'           : 'https://github.com/google/app-reporting-pack',
+    'description'           : 'https://github.com/google-marketing-solutions/app-reporting-pack',
     'depend_on_past'        : False,
     'start_date'            : datetime(2023, 3, 1),
     'email_on_failure'      : False,
