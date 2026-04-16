@@ -1,0 +1,2821 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/google-marketing-solutions/app-reporting-pack/development-guide-zh/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>App Reporting Pack — 从零开发指南与技术文档 - App Reporting Pack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Google Sans";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#app-reporting-pack" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="App Reporting Pack" class="md-header__button md-logo" aria-label="App Reporting Pack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            App Reporting Pack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              App Reporting Pack — 从零开发指南与技术文档
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="white"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="white" data-md-color-accent="white"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/google-marketing-solutions/app-reporting-pack" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    App Reporting Pack
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="App Reporting Pack" class="md-nav__button md-logo" aria-label="App Reporting Pack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    App Reporting Pack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/google-marketing-solutions/app-reporting-pack" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    App Reporting Pack
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/gcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/airflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Airflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/local/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Customization
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Customization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/skan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SKAN schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/video-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Video orientation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/backfill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backfill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/custom-conversions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom conversions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dashboard/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目录
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 项目概述
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 项目概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 项目定位
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 核心交付物
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 版本历史
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 技术栈与依赖
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 技术栈与依赖">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 语言与运行时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 核心 Python 依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 CLI 工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 GCP 服务
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 项目结构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 架构设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 架构设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 整体架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 编排层
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 模块化插件模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 模块间数据依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 核心数据流
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 核心数据流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 完整执行序列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 数据集命名约定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 数据流图
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 模块详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 模块详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Core 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Assets 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-geo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Geo 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-ios-skan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 iOS SKAN 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-disapprovals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Disapprovals 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Aggregate 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#67-conversion-lag-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Conversion Lag Performance 模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 配置系统
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 配置系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-appconfigyamltemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 主配置文件 (app/config.yaml.template)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-gcp-gcpsettingsini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 GCP 部署配置 (gcp/settings.ini)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 CLI 参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. SQL 查询体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. SQL 查询体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-gaql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 GAQL 查询模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-bigquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 BigQuery 查询模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Python 脚本详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Python 脚本详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-conv_lag_adjustmentpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 conv_lag_adjustment.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-fetch_video_orientationpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 fetch_video_orientation.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-create_skan_schemapy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 create_skan_schema.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-backfill_snapshotspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 backfill_snapshots.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 辅助模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-bigquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. BigQuery 数据模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. BigQuery 数据模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 表命名约定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 模式约定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 快照策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 增量策略
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 部署方式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 部署方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 本地执行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Docker 本地
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 GCP 云端部署
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 测试体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 测试体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 单元测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 端到端测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-gaql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 GAQL 查询验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 CI/CD 工作流
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 从零开发步骤
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 从零开发步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 环境准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 首次运行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 添加新模块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#135" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 添加新查询
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#136-gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.6 GCP 部署
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 常见问题与排障
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 常见问题与排障">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-gaarf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: gaarf 命令找不到？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: API 版本不兼容？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: 增量快照间隔导致数据缺失？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-skan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: SKAN 数据全是占位符？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5: 出价/预算变更历史缺失？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6: Docker 构建失败？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-bigquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q7: BigQuery 权限不足？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q8: 如何添加自定义转化列？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="app-reporting-pack">App Reporting Pack — 从零开发指南与技术文档</h1>
+<h2 id="_1">目录</h2>
+<ol>
+<li><a href="#1-项目概述">项目概述</a></li>
+<li><a href="#2-技术栈与依赖">技术栈与依赖</a></li>
+<li><a href="#3-项目结构">项目结构</a></li>
+<li><a href="#4-架构设计">架构设计</a></li>
+<li><a href="#5-核心数据流">核心数据流</a></li>
+<li><a href="#6-模块详解">模块详解</a></li>
+<li><a href="#7-配置系统">配置系统</a></li>
+<li><a href="#8-sql-查询体系">SQL 查询体系</a></li>
+<li><a href="#9-python-脚本详解">Python 脚本详解</a></li>
+<li><a href="#10-bigquery-数据模型">BigQuery 数据模型</a></li>
+<li><a href="#11-部署方式">部署方式</a></li>
+<li><a href="#12-测试体系">测试体系</a></li>
+<li><a href="#13-从零开发步骤">从零开发步骤</a></li>
+<li><a href="#14-常见问题与排障">常见问题与排障</a></li>
+</ol>
+<hr />
+<h2 id="1">1. 项目概述</h2>
+<h3 id="11">1.1 项目定位</h3>
+<p>App Reporting Pack (ARP) 是一个 Google Ads App 广告系列的集中化报表平台。它解决的核心问题是：Google Ads UI 中 App 广告系列的关键数据分散在多个页面，难以获取全局洞察。</p>
+<p>ARP 通过以下方式解决：
+- 从 Google Ads API 拉取原始数据
+- 在 BigQuery 中进行数据转换和聚合
+- 输出结构化表供 Looker Studio 仪表盘展示</p>
+<h3 id="12">1.2 核心交付物</h3>
+<p><strong>BigQuery 输出表：</strong>
+- <code>ad_group_network_split</code> — 广告组级别按网络拆分的效果数据
+- <code>asset_performance</code> — 素材级别效果数据（含队列分析）
+- <code>creative_excellence</code> — 广告系列创意健康度评分
+- <code>approval_statuses</code> — 广告审核状态追踪
+- <code>change_history</code> — 出价/预算变更历史
+- <code>performance_grouping_history</code> — 素材效果分组趋势
+- <code>geo_performance</code> — 地理位置效果数据
+- <code>ios_skan_decoder</code> — iOS SKAdNetwork 转化值解码</p>
+<h3 id="13">1.3 版本历史</h3>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>日期</th>
+<th>关键变更</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.4.0</td>
+<td>2024-06-25</td>
+<td>升级安装流程、自定义转化映射、API v16</td>
+</tr>
+<tr>
+<td>1.3.0</td>
+<td>2023-11-01</td>
+<td>增量保存、模块化、回填机制</td>
+</tr>
+<tr>
+<td>1.2.0</td>
+<td>2023-07-31</td>
+<td>iOS SKAN 支持</td>
+</tr>
+<tr>
+<td>1.1.0</td>
+<td>2022-11-23</td>
+<td>基础版本</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 技术栈与依赖</h2>
+<h3 id="21">2.1 语言与运行时</h3>
+<table>
+<thead>
+<tr>
+<th>技术</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bash (Shell)</td>
+<td>主编排脚本、部署自动化</td>
+</tr>
+<tr>
+<td>SQL (GAQL + BigQuery)</td>
+<td>数据提取与转换</td>
+</tr>
+<tr>
+<td>Python 3.11</td>
+<td>数据处理脚本</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>GCP Cloud Function (VM 创建)</td>
+</tr>
+<tr>
+<td>Jinja2</td>
+<td>SQL 模板引擎</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-python">2.2 核心 Python 依赖</h3>
+<div class="language-text highlight"><pre><span></span><code># app/requirements.in
+google-ads-api-report-fetcher[bq]   # gaarf — Google Ads API 报表拉取
+garf-executors[bq]                   # BigQuery 查询执行器
+garf_youtube_data_api                # YouTube Data API 集成
+pandas / numpy                       # 数据处理
+pyyaml                               # YAML 配置解析
+smart_open[gcs]                      # GCS 文件读写
+google-api-python-client             # GCP API 客户端
+db-dtypes                            # BigQuery 数据类型支持
+</code></pre></div>
+<h3 id="23-cli">2.3 CLI 工具</h3>
+<ul>
+<li><code>gaarf</code> — 执行 GAQL 查询，将 Google Ads 数据写入 BigQuery</li>
+<li><code>gaarf-bq</code> — 执行 Jinja2 模板化的 BigQuery SQL</li>
+<li><code>gaarf-simulator</code> — 模拟 API 查询用于测试（不实际调用 API）</li>
+</ul>
+<h3 id="24-gcp">2.4 GCP 服务</h3>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BigQuery</td>
+<td>数据仓库（原始表 + 输出表 + 快照表）</td>
+</tr>
+<tr>
+<td>Google Ads API</td>
+<td>广告数据源</td>
+</tr>
+<tr>
+<td>YouTube Data API</td>
+<td>视频素材元数据（可选）</td>
+</tr>
+<tr>
+<td>Compute Engine</td>
+<td>运行 Docker 容器的临时 VM</td>
+</tr>
+<tr>
+<td>Cloud Functions</td>
+<td>Pub/Sub 触发的 VM 编排</td>
+</tr>
+<tr>
+<td>Cloud Scheduler</td>
+<td>定时触发执行</td>
+</tr>
+<tr>
+<td>Artifact Registry</td>
+<td>Docker 镜像存储</td>
+</tr>
+<tr>
+<td>Cloud Storage</td>
+<td>配置文件和脚本存储</td>
+</tr>
+<tr>
+<td>Cloud Logging</td>
+<td>执行日志收集</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3">3. 项目结构</h2>
+<div class="language-text highlight"><pre><span></span><code>app-reporting-pack/
+├── app/                              # 主应用代码
+│   ├── run-local.sh                  # ★ 主入口脚本
+│   ├── requirements.in               # Python 依赖（未锁定）
+│   ├── requirements.txt              # Python 依赖（锁定 + hash）
+│   ├── config.yaml.template          # 配置模板
+│   │
+│   ├── core/                         # 核心模块：广告组效果
+│   │   ├── google_ads_queries/       #   GAQL 查询（从 Ads API 拉数据）
+│   │   └── bq_queries/              #   BigQuery 转换查询
+│   │       ├── views/               #     视图 + UDF 函数
+│   │       ├── snapshots/           #     每日快照
+│   │       ├── incremental/         #     增量处理
+│   │       └── legacy_views/        #     旧版兼容视图
+│   │
+│   ├── assets/                       # 素材模块：素材级效果 + 创意评分
+│   │   ├── google_ads_queries/
+│   │   └── bq_queries/
+│   │
+│   ├── geo/                          # 地理模块：按地区的效果
+│   │   ├── google_ads_queries/
+│   │   └── bq_queries/
+│   │
+│   ├── ios_skan/                     # iOS SKAN 模块：SKAdNetwork 数据
+│   │   ├── google_ads_queries/
+│   │   └── bq_queries/
+│   │
+│   ├── disapprovals/                 # 审核模块：广告审批状态
+│   │   ├── google_ads_queries/
+│   │   └── bq_queries/
+│   │
+│   ├── aggregate/                    # 聚合模块：跨模块汇总
+│   │   └── bq_queries/
+│   │
+│   ├── conversion_lag_performance/   # 转化延迟模块
+│   │   ├── google_ads_queries/
+│   │   └── bq_queries/
+│   │
+│   └── scripts/                      # Python 脚本 + Shell 工具
+│       ├── backfill_snapshots.py     #   快照回填
+│       ├── conv_lag_adjustment.py    #   转化延迟调整
+│       ├── create_skan_schema.py     #   SKAN 模式管理
+│       ├── fetch_video_orientation.py #  视频方向获取
+│       ├── create_dashboard.sh       #   仪表盘创建
+│       ├── src/                      #   Python 库
+│       │   ├── conv_lag_builder.py   #     延迟系数计算
+│       │   └── queries.py           #     查询类定义
+│       ├── shell_utils/              #   Shell 工具函数
+│       │   ├── functions.sh          #     通用工具
+│       │   ├── gaarf.sh             #     gaarf 封装
+│       │   └── app_reporting_pack.sh #     ARP 配置逻辑
+│       └── data/
+│           └── conversion_lag_mapping.csv
+│
+├── gcp/                              # GCP 部署相关
+│   ├── settings.ini                  #   部署配置
+│   ├── install.sh                    #   安装脚本
+│   ├── setup.sh                      #   部署自动化（432行）
+│   ├── upgrade.sh                    #   升级脚本
+│   ├── cloudbuild.yaml               #   Cloud Build 配置
+│   ├── cloud-functions/create-vm/    #   Cloud Function（Node.js）
+│   └── workload-vm/                  #   VM 工作负载
+│       ├── Dockerfile
+│       └── main.sh
+│
+├── tests/
+│   ├── unit/                         # 单元测试
+│   ├── end-to-end/                   # 端到端测试
+│   └── test_google_queries.sh        # GAQL 查询验证
+│
+├── docs/                             # 文档 + 截图
+├── Dockerfile                        # 主 Docker 镜像
+├── docker-compose.yaml
+├── .github/workflows/                # CI/CD
+└── .pre-commit-config.yaml           # 代码质量钩子
+</code></pre></div>
+<h2 id="4">4. 架构设计</h2>
+<h3 id="41">4.1 整体架构</h3>
+<p>ARP 采用 Shell 编排 + 模块化插件 的架构模式：</p>
+<div class="language-text highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────┐
+│                   run-local.sh (编排层)                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │ functions.sh  │  │  gaarf.sh    │  │ app_report.. │   │
+│  │ (通用工具)     │  │ (CLI 封装)   │  │ (ARP 配置)   │   │
+│  └──────────────┘  └──────────────┘  └──────────────┘   │
+├─────────────────────────────────────────────────────────┤
+│                      模块层 (Modules)                     │
+│  ┌──────┐ ┌──────┐ ┌─────┐ ┌──────┐ ┌──────┐ ┌─────┐  │
+│  │ core │ │assets│ │ geo │ │ skan │ │disap.│ │aggr.│  │
+│  └──┬───┘ └──┬───┘ └──┬──┘ └──┬───┘ └──┬───┘ └──┬──┘  │
+│     │        │        │       │        │        │      │
+├─────┼────────┼────────┼───────┼────────┼────────┼──────┤
+│     ▼        ▼        ▼       ▼        ▼        ▼      │
+│  ┌─────────────────┐  ┌──────────────────────────┐     │
+│  │ google_ads_queries│  │     bq_queries            │     │
+│  │ (GAQL → gaarf)   │  │ (Jinja2 SQL → gaarf-bq)   │     │
+│  └────────┬────────┘  └────────────┬─────────────┘     │
+│           │                        │                    │
+│  ┌────────▼────────┐  ┌───────────▼──────────────┐     │
+│  │ Python 中间件    │  │ BigQuery                   │     │
+│  │ (conv_lag, video │  │ views → snapshots → output │     │
+│  │  orientation...) │  │                            │     │
+│  └─────────────────┘  └────────────────────────────┘     │
+└─────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="42">4.2 编排层</h3>
+<p><code>run-local.sh</code> 是唯一入口，加载三个 Shell 库：</p>
+<table>
+<thead>
+<tr>
+<th>库文件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>functions.sh</code></td>
+<td>配置解析、gaarf 版本检查、增量快照检测、BQ 上传</td>
+</tr>
+<tr>
+<td><code>gaarf.sh</code></td>
+<td><code>fetch_reports()</code> 和 <code>generate_output_tables()</code> 封装</td>
+</tr>
+<tr>
+<td><code>app_reporting_pack.sh</code></td>
+<td>SKAN 配置、cohort 设置、BQ 宏生成、日期校验</td>
+</tr>
+</tbody>
+</table>
+<p>两个核心复用函数驱动所有模块执行：
+- <code>run_google_ads_queries(module)</code> — 执行 <code>{module}/google_ads_queries/*.sql</code>
+- <code>run_bq_queries(module)</code> — 按顺序执行 snapshots → views → 主查询 → legacy_views → incremental</p>
+<h3 id="43">4.3 模块化插件模式</h3>
+<p>每个模块遵循统一的目录约定：</p>
+<div class="language-text highlight"><pre><span></span><code>{module}/
+├── google_ads_queries/    # GAQL 查询文件（可选，aggregate 模块无此目录）
+│   ├── query_1.sql
+│   └── query_2.sql
+└── bq_queries/
+    ├── views/             # 视图和 UDF
+    ├── snapshots/         # 每日快照
+    ├── incremental/       # 增量处理（initial_load.sql + incremental_saving.sql）
+    ├── legacy_views/      # 旧版兼容视图
+    ├── output_query.sql   # 主输出查询
+    └── ...
+</code></pre></div>
+<p>默认模块列表：<code>core,assets,disapprovals,ios_skan,geo,aggregate</code>
+可通过 <code>--modules</code> 参数自定义。</p>
+<h3 id="44">4.4 模块间数据依赖</h3>
+<div class="language-text highlight"><pre><span></span><code>core ──────► assets ──────► aggregate
+  │              │
+  │              ├──► disapprovals
+  │              │
+  ▼              ▼
+ (views)    (AssetCohorts)
+</code></pre></div>
+<ul>
+<li><code>core</code> 创建基础视图（<code>AppCampaignSettingsView</code>、<code>GeoLanguageView</code>、<code>ConversionLagAdjustments</code>）</li>
+<li>其他模块通过 BigQuery JOIN 引用这些视图</li>
+<li><code>aggregate</code> 模块 UNION 合并 assets/video/display 输出表</li>
+</ul>
+<hr />
+<h2 id="5">5. 核心数据流</h2>
+<h3 id="51">5.1 完整执行序列</h3>
+<p><code>run_with_config()</code> 函数（<code>run-local.sh</code>）按以下顺序执行：</p>
+<p><strong>Phase 0 — 预检查</strong>
+- 对每个模块调用 <code>check_initial_load</code> 和 <code>check_missing_incremental_snapshot</code>
+- 检测增量快照表是否存在、是否有间隔
+- <code>define_runtime_config</code> 根据检测结果调整 <code>start_date</code></p>
+<p><strong>Phase 1 — Core 模块</strong>
+1. <code>run_google_ads_queries "core"</code> — 拉取 13 个 GAQL 查询到 BQ 原始表
+2. <code>conv_lag_adjustment.py</code> — 从 Ads API 获取 180 天转化延迟数据，计算调整系数
+3. <code>gaarf-bq core/bq_queries/snapshots/*.sql</code> — 创建 <code>bid_budgets_{date_iso}</code> 快照
+4. <code>backfill_snapshots.py --restore-bid-budgets</code> — 回填最近 28 天缺失的出价/预算快照
+5. <code>run_bq_queries "core"</code> — 创建视图 → UDF → 输出表 → 旧版视图 → 增量保存</p>
+<p><strong>Phase 2 — Assets 模块</strong>
+1. <code>run_google_ads_queries "assets"</code> — 拉取 8 个 GAQL 查询
+2. <code>fetch_video_orientation.py</code> — 从 YouTube Data API 获取视频方向
+3. <code>backfill_snapshots.py --restore-cohorts</code> — 回填最近 5 天缺失的转化延迟队列快照
+4. <code>run_bq_queries "assets"</code> — 创建快照 → 视图 → 输出表</p>
+<p><strong>Phase 3 — Disapprovals 模块</strong>
+1. <code>run_google_ads_queries "disapprovals"</code> — 拉取广告审核状态
+2. <code>run_bq_queries "disapprovals"</code> — 创建快照 → 输出 <code>approval_statuses</code></p>
+<p><strong>Phase 4 — Geo 模块</strong>
+1. <code>run_google_ads_queries "geo"</code> — 拉取地理效果数据
+2. <code>run_bq_queries "geo"</code> — 输出 <code>geo_performance</code></p>
+<p><strong>Phase 5 — iOS SKAN 模块</strong>
+1. <code>run_google_ads_queries "ios_skan"</code> — 拉取 SKAN 回传数据
+2. <code>create_skan_schema.py</code> — 创建/复制 SKAN 模式表
+3. <code>run_bq_queries "ios_skan"</code> — 输出 <code>skan_decoder</code></p>
+<p><strong>Phase 6 — Aggregate 模块</strong>
+1. <code>run_bq_queries "aggregate"</code> — 动态 UNION 合并素材效果表</p>
+<p><strong>Phase 7 — 收尾</strong>
+- <code>upload_last_run_to_bq</code> — 写入 <code>last_run</code> 表记录执行时间</p>
+<h3 id="52">5.2 数据集命名约定</h3>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>默认名</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{bq_dataset}</code></td>
+<td><code>arp</code></td>
+<td>原始数据 + 中间表 + 视图 + 快照</td>
+</tr>
+<tr>
+<td><code>{bq_dataset}_output</code></td>
+<td><code>arp_output</code></td>
+<td>最终输出表（供仪表盘使用）</td>
+</tr>
+<tr>
+<td><code>{bq_dataset}_legacy</code></td>
+<td><code>arp_legacy</code></td>
+<td>旧版兼容视图</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53">5.3 数据流图</h3>
+<div class="language-text highlight"><pre><span></span><code>Google Ads API                    YouTube Data API
+      │                                  │
+      ▼                                  ▼
+  gaarf CLI ──► {bq_dataset}        video_orientation
+  (GAQL)        (原始表)                  │
+      │              │                    │
+      │         ┌────┴────┐               │
+      │         ▼         ▼               │
+      │    views/UDF   snapshots          │
+      │         │     (bid_budgets_*      │
+      │         │      conversion_lags_*) │
+      │         ▼         │               │
+      │    Python 脚本 ◄──┘               │
+      │    (conv_lag,                     │
+      │     backfill)                     │
+      │         │                         │
+      │         ▼                         │
+      └──► gaarf-bq ◄────────────────────┘
+           (Jinja2 SQL)
+                │
+                ▼
+        {bq_dataset}_output
+        (最终输出表)
+                │
+                ▼
+          Looker Studio
+</code></pre></div>
+<hr />
+<h2 id="6">6. 模块详解</h2>
+<h3 id="61-core">6.1 Core 模块</h3>
+<p><strong>GAQL 查询</strong>（13 个）：</p>
+<table>
+<thead>
+<tr>
+<th>查询文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>account_campaign_ad_group_mapping.sql</code></td>
+<td>账户/广告系列/广告组层级映射</td>
+</tr>
+<tr>
+<td><code>ad_group_conversion_split.sql</code></td>
+<td>按广告组、网络、转化操作拆分的转化数据</td>
+</tr>
+<tr>
+<td><code>ad_group_performance.sql</code></td>
+<td>广告组级别点击/展示/花费/视频观看</td>
+</tr>
+<tr>
+<td><code>app_campaign_settings.sql</code></td>
+<td>广告系列类型、app_id、出价策略、目标转化</td>
+</tr>
+<tr>
+<td><code>app_conversions_mapping.sql</code></td>
+<td>转化来源/名称/类型/ID 映射</td>
+</tr>
+<tr>
+<td><code>bid_budget.sql</code></td>
+<td>启用状态广告系列的当前出价和预算</td>
+</tr>
+<tr>
+<td><code>campaign_geo_targets.sql</code></td>
+<td>广告系列地理定向标准</td>
+</tr>
+<tr>
+<td><code>campaign_languages.sql</code></td>
+<td>广告系列语言定向</td>
+</tr>
+<tr>
+<td><code>display_campaign_performance.sql</code></td>
+<td>Display 广告系列效果（含视频四分位）</td>
+</tr>
+<tr>
+<td><code>geo_target_constant.sql</code></td>
+<td>地理目标常量参考数据</td>
+</tr>
+<tr>
+<td><code>ocid_mapping.sql</code></td>
+<td>OCID 映射（builtin 查询）</td>
+</tr>
+<tr>
+<td><code>action_items.sql</code></td>
+<td>广告组操作建议</td>
+</tr>
+<tr>
+<td><code>ad_group_ad_mapping.sql</code></td>
+<td>广告组到广告映射（仅 VIDEO 类型）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>BQ 转换</strong>：
+- <code>views/functions.sql</code> — 创建 UDF：<code>NormalizeMillis</code>（微分单位转换）、<code>ConvertAdNetwork</code>（网络枚举转换）、<code>BinText</code>/<code>BinBanners</code>（素材数量分箱）等
+- <code>views/views.sql</code> — 创建视图：<code>AppCampaignSettingsView</code>（丰富的广告系列设置）、<code>GeoLanguageView</code>（聚合地理/语言定向）、<code>ConversionLagAdjustments</code>（延迟查找表）
+- <code>snapshots/bid_budget_snapshot.sql</code> — 创建 <code>bid_budgets_{date_iso}</code> 每日快照
+- <code>ad_group_network_split.sql</code> — 主输出：JOIN 效果 + 转化 + 映射 + 设置 + 地理/语言，应用转化延迟调整
+- <code>change_history.sql</code> — 广告系列级别变更历史（出价/预算追踪、预算超限标记、CPA 偏离检测）</p>
+<p><strong>输出表</strong>：<code>ad_group_network_split</code>、<code>change_history</code></p>
+<h3 id="62-assets">6.2 Assets 模块</h3>
+<p><strong>GAQL 查询</strong>（8 个）：</p>
+<table>
+<thead>
+<tr>
+<th>查询文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>asset_performance.sql</code></td>
+<td>素材级别点击/展示/花费/安装/应用内</td>
+</tr>
+<tr>
+<td><code>asset_mapping.sql</code></td>
+<td>素材元数据（文本、图片尺寸、YouTube 视频信息）</td>
+</tr>
+<tr>
+<td><code>asset_reference.sql</code></td>
+<td>素材状态：启用、效果标签、审核/审查状态</td>
+</tr>
+<tr>
+<td><code>asset_structure.sql</code></td>
+<td>广告结构（每种广告类型的标题/描述/图片/视频数量）</td>
+</tr>
+<tr>
+<td><code>asset_conversion_split.sql</code></td>
+<td>按网络/转化操作拆分的素材级转化</td>
+</tr>
+<tr>
+<td><code>ad_strength.sql</code></td>
+<td>广告强度评分</td>
+</tr>
+<tr>
+<td><code>mediafile.sql</code></td>
+<td>媒体文件元数据（图片 URL、视频 ID、时长）</td>
+</tr>
+<tr>
+<td><code>video.sql</code></td>
+<td>视频广告系列效果（含四分位完播率）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>BQ 转换</strong>：
+- <code>snapshots/conversion_lags.sql</code> — 每日转化延迟快照
+- <code>snapshots/asset_approval_statuses_snapshot.sql</code> — 素材审核状态快照
+- <code>views/views.sql</code> — 创建 <code>AssetCohorts</code> 视图（展开 1-90 天延迟，向前填充，构造 STRUCT 数组）
+- <code>asset_performance.sql</code> — 主输出：丰富的素材效果含队列数据、视频方向、尺寸、自定义转化
+- <code>creative_excellence.sql</code> — 创意健康度：素材数量、预算充足性、广告强度、7 天效果评估</p>
+<p><strong>输出表</strong>：<code>asset_performance</code>、<code>creative_excellence</code>、<code>change_history</code>、<code>performance_grouping_history</code>、<code>asset_conversion_split</code>、<code>display_asset_performance</code>、<code>video_campaign_asset_performance</code></p>
+<h3 id="63-geo">6.3 Geo 模块</h3>
+<p><strong>GAQL 查询</strong>（2 个）：
+- <code>geo_performance.sql</code> — 用户位置视图（按国家的展示/点击/花费）
+- <code>geo_performance_conversion_split.sql</code> — 地理转化分类拆分</p>
+<p><strong>BQ 转换</strong>：JOIN 地理效果 + 转化拆分 + 映射 + 广告系列设置 + 地理目标常量</p>
+<p><strong>输出表</strong>：<code>geo_performance</code></p>
+<h3 id="64-ios-skan">6.4 iOS SKAN 模块</h3>
+<p><strong>GAQL 查询</strong>（1 个）：
+- <code>ios_campaign_skan_performance.sql</code> — SKAN 回传数据（按广告系列、转化值、来源应用、用户类型）</p>
+<p><strong>BQ 转换</strong>：使用 schema 输入表解码 SKAN 转化值，按出价策略（tCPI、tCPA、tROAS）分段</p>
+<p><strong>输出表</strong>：<code>skan_decoder</code></p>
+<h3 id="65-disapprovals">6.5 Disapprovals 模块</h3>
+<p><strong>GAQL 查询</strong>（1 个）：
+- <code>ad_group_ad_disapprovals.sql</code> — 广告组审核/审查状态及政策主题</p>
+<p><strong>BQ 转换</strong>：创建每日审核快照 → 合并广告组和素材审核数据</p>
+<p><strong>输出表</strong>：<code>approval_statuses</code></p>
+<h3 id="66-aggregate">6.6 Aggregate 模块</h3>
+<p><strong>GAQL 查询</strong>：无（纯 BQ 模块）</p>
+<p><strong>BQ 转换</strong>：<code>aggregate_performance.sql</code> — 使用动态 SQL（<code>DECLARE</code>/<code>IF</code>/<code>EXECUTE IMMEDIATE</code>）检测源表是否存在，将 <code>asset_performance</code>、<code>video_campaign_asset_performance</code>、<code>display_asset_performance</code> UNION 合并</p>
+<p><strong>输出表</strong>：<code>aggregate_asset_performance</code></p>
+<h3 id="67-conversion-lag-performance">6.7 Conversion Lag Performance 模块</h3>
+<p><strong>GAQL 查询</strong>（2 个）：
+- <code>ad_group_conversion_lag.sql</code> — 按延迟桶、网络、转化操作拆分的转化
+- <code>account_conversion_action_settings.sql</code> — 转化操作配置详情</p>
+<p><strong>BQ 转换</strong>：JOIN 延迟数据 + 转化操作设置，将延迟桶枚举映射为可读范围</p>
+<p><strong>输出表</strong>：<code>conversion_lag_performance</code></p>
+<blockquote>
+<p><strong>注意</strong>：此模块不在默认模块列表中，需通过 <code>--modules</code> 显式启用。</p>
+</blockquote>
+<hr />
+<h2 id="7">7. 配置系统</h2>
+<h3 id="71-appconfigyamltemplate">7.1 主配置文件 (<code>app/config.yaml.template</code>)</h3>
+<p>配置分为三个顶级段落：</p>
+<p><strong><code>gaarf</code> 段 — 控制 Google Ads API 数据拉取</strong>：</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">gaarf</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bq</span>
+<span class="w">  </span><span class="nt">bq</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-gcp-project</span>
+<span class="w">    </span><span class="nt">dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arp</span><span class="w">                          </span><span class="c1"># 原始数据集</span>
+<span class="w">  </span><span class="nt">api_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;21&quot;</span><span class="w">                       </span><span class="c1"># 支持 19, 20, 21</span>
+<span class="w">  </span><span class="nt">account</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">123-456-7890</span><span class="w">                   </span><span class="c1"># MCC 或子账户 ID</span>
+<span class="w">  </span><span class="nt">customer_ids_query</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span><span class="w">                  </span><span class="c1"># 账户过滤查询</span>
+<span class="w">    </span><span class="no">SELECT customer.id FROM campaign</span>
+<span class="w">    </span><span class="no">WHERE campaign.advertising_channel_type IN (&quot;MULTI_CHANNEL&quot;)</span>
+<span class="w">  </span><span class="nt">params</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">macro</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">start_date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;:YYYYMMDD-90&quot;</span><span class="w">          </span><span class="c1"># 开始日期（默认 90 天前）</span>
+<span class="w">      </span><span class="nt">end_date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;:YYYYMMDD-1&quot;</span><span class="w">             </span><span class="c1"># 结束日期（默认昨天）</span>
+</code></pre></div>
+<p><strong><code>gaarf-bq</code> 段 — 控制 BigQuery 转换</strong>：</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">gaarf-bq</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-gcp-project</span>
+<span class="w">  </span><span class="nt">params</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">macro</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">bq_dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arp</span><span class="w">                     </span><span class="c1"># 源数据集</span>
+<span class="w">      </span><span class="nt">target_dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arp_output</span><span class="w">          </span><span class="c1"># 输出数据集</span>
+<span class="w">      </span><span class="nt">legacy_dataset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arp_legacy</span><span class="w">          </span><span class="c1"># 旧版数据集</span>
+<span class="w">      </span><span class="nt">skan_schema_input_table</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">         </span><span class="c1"># SKAN 模式表引用</span>
+<span class="w">    </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">cohort_days</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0,1,3,5,7,14,30&quot;</span><span class="w">      </span><span class="c1"># 队列延迟天数</span>
+<span class="w">      </span><span class="nt">has_skan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                       </span><span class="c1"># 启用 SKAN 解码</span>
+<span class="w">      </span><span class="nt">incremental</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">                   </span><span class="c1"># 启用增量存储</span>
+</code></pre></div>
+<p><strong>运行时标志</strong>：</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">scripts</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">skan_mode</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">placeholders</span><span class="w">                    </span><span class="c1"># placeholders 或 table</span>
+<span class="nt">incremental</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">legacy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">backfill</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h3 id="72-gcp-gcpsettingsini">7.2 GCP 部署配置 (<code>gcp/settings.ini</code>)</h3>
+<div class="language-ini highlight"><pre><span></span><code><span class="k">[config]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">arp</span>
+<span class="na">config-file</span><span class="o">=</span><span class="s">app_reporting_pack.yaml</span>
+
+<span class="k">[repository]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">arp</span>
+<span class="na">image</span><span class="o">=</span><span class="s">arp-image</span>
+<span class="na">location</span><span class="o">=</span><span class="s">us-docker.pkg.dev</span>
+
+<span class="k">[function]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">arp-cf</span>
+<span class="na">region</span><span class="o">=</span><span class="s">us-central1</span>
+
+<span class="k">[pubsub]</span>
+<span class="na">topic</span><span class="o">=</span><span class="s">arp-topic</span>
+
+<span class="k">[scheduler]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">arp-scheduler</span>
+<span class="na">schedule</span><span class="o">=</span><span class="s">0 0 * * *</span><span class="w">                        </span><span class="c1"># 每天午夜执行</span>
+<span class="na">region</span><span class="o">=</span><span class="s">us-central1</span>
+
+<span class="k">[compute]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">arp-vm</span>
+<span class="na">machine-type</span><span class="o">=</span><span class="s">e2-standard-2</span>
+<span class="na">region</span><span class="o">=</span><span class="s">us-central1</span>
+<span class="na">zone</span><span class="o">=</span><span class="s">us-central1-c</span>
+<span class="na">no-public-ip</span><span class="o">=</span><span class="s">false</span>
+</code></pre></div>
+<h3 id="73-cli">7.3 CLI 参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-c, --config</code></td>
+<td>配置文件路径</td>
+</tr>
+<tr>
+<td><code>-a, --account-id</code></td>
+<td>MCC/子账户 ID</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code></td>
+<td>跳过确认提示</td>
+</tr>
+<tr>
+<td><code>-g, --google-ads-config</code></td>
+<td>google-ads.yaml 路径</td>
+</tr>
+<tr>
+<td><code>-l, --loglevel</code></td>
+<td>日志级别（DEBUG/INFO/WARNING/ERROR）</td>
+</tr>
+<tr>
+<td><code>--legacy</code></td>
+<td>生成旧版兼容视图</td>
+</tr>
+<tr>
+<td><code>--backfill / --no-backfill</code></td>
+<td>控制出价/预算回填</td>
+</tr>
+<tr>
+<td><code>--initial-load</code></td>
+<td>执行历史数据初始加载</td>
+</tr>
+<tr>
+<td><code>--backfill-only</code></td>
+<td>仅执行快照回填</td>
+</tr>
+<tr>
+<td><code>--generate-config-only</code></td>
+<td>仅生成配置不拉取数据</td>
+</tr>
+<tr>
+<td><code>--modules</code></td>
+<td>逗号分隔的模块列表</td>
+</tr>
+<tr>
+<td><code>--api-version</code></td>
+<td>覆盖 API 版本</td>
+</tr>
+<tr>
+<td><code>--reset-incremental-performance-snapshots</code></td>
+<td>删除增量快照表</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-sql">8. SQL 查询体系</h2>
+<h3 id="81-gaql">8.1 GAQL 查询模式</h3>
+<p>所有 GAQL 查询遵循标准 Google Ads 查询语言，常见模式：</p>
+<div class="language-sql highlight"><pre><span></span><code><span class="c1">-- 广告系列类型过滤</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">campaign</span><span class="p">.</span><span class="n">advertising_channel_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;MULTI_CHANNEL&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;DEMAND_GEN&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;SEARCH&quot;</span><span class="p">)</span>
+
+<span class="c1">-- 日期范围宏</span>
+<span class="k">AND</span><span class="w"> </span><span class="n">segments</span><span class="p">.</span><span class="nb">date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="ss">&quot;{start_date}&quot;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">segments</span><span class="p">.</span><span class="nb">date</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="ss">&quot;{end_date}&quot;</span>
+
+<span class="c1">-- 资源 ID 提取（波浪线语法）</span>
+<span class="n">segments</span><span class="p">.</span><span class="n">conversion_action</span><span class="o">~</span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">conversion_id</span>
+
+<span class="c1">-- 嵌套字段访问（冒号语法）</span>
+<span class="n">change_event</span><span class="p">.</span><span class="n">old_resource</span><span class="p">:</span><span class="n">campaign_budget</span><span class="p">.</span><span class="n">amount_micros</span>
+
+<span class="c1">-- 策略摘要数组</span>
+<span class="n">ad_group_ad_asset_view</span><span class="p">.</span><span class="n">policy_summary</span><span class="p">:</span><span class="n">policy_topic_entries</span><span class="p">.</span><span class="k">type</span>
+</code></pre></div>
+<h3 id="82-bigquery">8.2 BigQuery 查询模式</h3>
+<p><strong>视图（views/）</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">AppCampaignSettingsView</span><span class="o">`</span><span class="w"> </span><span class="k">AS</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">app_campaign_settings</span><span class="o">`</span><span class="w"> </span><span class="p">...</span>
+</code></pre></div></p>
+<p><strong>快照（snapshots/）</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">bid_budgets_</span><span class="err">{</span><span class="n">date_iso</span><span class="err">}</span><span class="o">`</span><span class="w"> </span><span class="k">AS</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">bid_budget</span><span class="o">`</span>
+</code></pre></div></p>
+<p><strong>增量处理（incremental/）</strong>：
+- <code>incremental_saving.sql</code> — 将 <code>start_date</code> 之前的数据归档到 <code>{table}_{yesterday_iso}</code>，之后的数据到 <code>{table}_{date_iso}</code>
+- <code>initial_load.sql</code> — 首次加载时按初始日期边界拆分数据</p>
+<p><strong>Jinja2 模板</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="c1">-- 条件表名（增量模式）</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">incremental</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">&quot;true&quot;</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="w">  </span><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">target_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">ad_group_network_split_</span><span class="err">{</span><span class="n">date_iso</span><span class="err">}</span><span class="o">`</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="w">  </span><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">target_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">ad_group_network_split</span><span class="o">`</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+
+<span class="c1">-- 动态自定义转化列</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">custom_conversion</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">custom_conversions</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="w">  </span><span class="k">SUM</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">conversion_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;{{custom_conversion}}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">conversions</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
+<span class="w">    </span><span class="k">AS</span><span class="w"> </span><span class="n">conversions_</span><span class="err">{{</span><span class="n">custom_conversion</span><span class="err">}}</span><span class="p">,</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="n">endfor</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+
+<span class="c1">-- 动态队列天数</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">day</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">cohort_days</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="w">  </span><span class="n">cohorts</span><span class="p">.</span><span class="n">installs_</span><span class="err">{{</span><span class="k">day</span><span class="err">}}</span><span class="n">_days_ago</span><span class="p">,</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="n">endfor</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+</code></pre></div></p>
+<p><strong>动态 SQL（aggregate）</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="k">DECLARE</span><span class="w"> </span><span class="n">union_query</span><span class="w"> </span><span class="n">STRING</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="p">;</span>
+<span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">target_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">INFORMATION_SCHEMA</span><span class="p">.</span><span class="n">TABLES</span><span class="o">`</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;asset_performance&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">union_query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="n">union_query</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;SELECT ... FROM ...&quot;</span><span class="p">);</span>
+<span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span>
+<span class="k">EXECUTE</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="w"> </span><span class="n">union_query</span><span class="p">;</span>
+</code></pre></div></p>
+<p><strong>UDF 函数</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="c1">-- BigQuery 标准函数</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">NormalizeMillis</span><span class="o">`</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="n">INT64</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">e6</span><span class="p">);</span>
+
+<span class="c1">-- JavaScript UDF</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">FUNCTION</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">equalsArr</span><span class="o">`</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="nb">ARRAY</span><span class="o">&lt;</span><span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="nb">ARRAY</span><span class="o">&lt;</span><span class="n">STRING</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">RETURNS</span><span class="w"> </span><span class="n">BOOL</span>
+<span class="w">  </span><span class="k">LANGUAGE</span><span class="w"> </span><span class="n">js</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">r</span><span class="ss">&quot;&quot;&quot;...&quot;&quot;&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<hr />
+<h2 id="9-python">9. Python 脚本详解</h2>
+<h3 id="91-conv_lag_adjustmentpy">9.1 conv_lag_adjustment.py</h3>
+<ul>
+<li><strong>作用</strong>：计算每个网络和 conversion_id 的转化延迟调整系数</li>
+<li><strong>输入</strong>：Google Ads API 数据（180 天窗口，30 天偏移），通过 <code>ConversionLagQuery</code> 获取</li>
+<li><strong>处理流程</strong>：</li>
+<li>读取 <code>conversion_lag_mapping.csv</code> 将延迟桶枚举映射为数值</li>
+<li>计算累积转化百分比</li>
+<li>展开延迟桶为 1-90 天的每日粒度</li>
+<li>计算增量延迟调整值</li>
+<li><strong>输出</strong>：BQ 表 <code>conversion_lag_adjustments</code>（列：<code>network</code>, <code>conversion_id</code>, <code>lag_day</code>, <code>lag_adjustment</code>）</li>
+<li><strong>调用时机</strong>：Core 模块执行阶段</li>
+</ul>
+<h3 id="92-fetch_video_orientationpy">9.2 fetch_video_orientation.py</h3>
+<ul>
+<li><strong>作用</strong>：判断 YouTube 视频素材的方向（Landscape/Portrait/Square）</li>
+<li><strong>输入</strong>：查询 <code>asset_mapping</code> 表获取 YouTube 视频 ID</li>
+<li><strong>处理</strong>：调用 YouTube Data API 获取嵌入尺寸，计算宽高比。API 失败时回退为 "Unknown"</li>
+<li><strong>输出</strong>：BQ 表 <code>video_orientation</code>（列：<code>video_id</code>, <code>video_orientation</code>）</li>
+<li><strong>调用时机</strong>：Assets 模块执行阶段</li>
+</ul>
+<h3 id="93-create_skan_schemapy">9.3 create_skan_schema.py</h3>
+<ul>
+<li><strong>作用</strong>：创建或复制 SKAN 转化值模式表</li>
+<li><strong>模式</strong>：</li>
+<li><code>placeholders</code> — 创建示例值的占位表</li>
+<li><code>table</code> — 从用户指定的 BQ 表复制</li>
+<li><strong>输出</strong>：BQ 表 <code>skan_schema_input_table</code></li>
+<li><strong>调用时机</strong>：iOS SKAN 模块执行阶段</li>
+</ul>
+<h3 id="94-backfill_snapshotspy">9.4 backfill_snapshots.py</h3>
+<p>三种独立的回填操作：</p>
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>说明</th>
+<th>窗口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--restore-bid-budgets</code></td>
+<td>从变更历史 API 恢复缺失的出价/预算快照</td>
+<td>28 天</td>
+</tr>
+<tr>
+<td><code>--restore-cohorts</code></td>
+<td>从最近可用快照复制缺失的转化延迟队列快照</td>
+<td>5 天</td>
+</tr>
+<tr>
+<td><code>--restore-incremental-snapshots</code></td>
+<td>检测增量快照间隔，输出新的 start_date</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="95">9.5 辅助模块</h3>
+<p><strong><code>src/queries.py</code></strong> — 定义 GAQL 查询类：
+- <code>ConversionLagQuery</code> — 转化延迟数据查询
+- <code>ChangeHistory</code> — 出价/预算变更历史查询
+- <code>BidsBudgetsActiveCampaigns</code> / <code>BidsBudgetsInactiveCampaigns</code> — 出价预算查询
+- <code>CampaignsWithSpend</code> — 有花费的广告系列查询</p>
+<p><strong><code>src/conv_lag_builder.py</code></strong> — 核心延迟计算逻辑：
+- <code>ConversionLagBuilder</code> 类接收延迟数据 DataFrame 和分组列
+- 计算累积转化百分比 → 展开为每日粒度 → 产出调整系数</p>
+<p><strong><code>scripts/create_dashboard.sh</code></strong> — 生成 Looker Studio 仪表盘克隆 URL</p>
+<hr />
+<h2 id="10-bigquery">10. BigQuery 数据模型</h2>
+<h3 id="101">10.1 表命名约定</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>格式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始表</td>
+<td><code>{bq_dataset}.{table_name}</code></td>
+<td><code>arp.ad_group_performance</code></td>
+</tr>
+<tr>
+<td>输出表</td>
+<td><code>{target_dataset}.{table_name}</code></td>
+<td><code>arp_output.ad_group_network_split</code></td>
+</tr>
+<tr>
+<td>增量表</td>
+<td><code>{target_dataset}.{table_name}_{date_iso}</code></td>
+<td><code>arp_output.ad_group_network_split_20240101</code></td>
+</tr>
+<tr>
+<td>快照表</td>
+<td><code>{bq_dataset}.{table_name}_{date_iso}</code></td>
+<td><code>arp.bid_budgets_20240101</code></td>
+</tr>
+<tr>
+<td>旧版视图</td>
+<td><code>{legacy_dataset}.{view_name}</code></td>
+<td><code>arp_legacy.change_history</code></td>
+</tr>
+<tr>
+<td>视图</td>
+<td><code>{bq_dataset}.{ViewName}</code> (PascalCase)</td>
+<td><code>arp.AppCampaignSettingsView</code></td>
+</tr>
+<tr>
+<td>函数</td>
+<td><code>{bq_dataset}.{FunctionName}</code> (PascalCase)</td>
+<td><code>arp.NormalizeMillis</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="102">10.2 模式约定</h3>
+<ul>
+<li><strong>货币值</strong>：原始表存储为 micros（INT64），输出表通过 <code>NormalizeMillis</code>（÷1e6）转换</li>
+<li><strong>网络枚举</strong>：原始存储为字符串（<code>CONTENT</code>、<code>SEARCH</code>），通过 <code>ConvertAdNetwork</code> 转换</li>
+<li><strong>日期</strong>：原始表为 <code>YYYY-MM-DD</code> 字符串，输出表解析为 DATE 类型</li>
+<li><strong>通配符访问</strong>：<code>{bq_dataset}.bid_budgets_*</code> 配合 <code>_TABLE_SUFFIX</code> 过滤</li>
+</ul>
+<h3 id="103">10.3 快照策略</h3>
+<table>
+<thead>
+<tr>
+<th>快照表</th>
+<th>说明</th>
+<th>回填窗口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bid_budgets_{date_iso}</code></td>
+<td>每日出价/预算状态</td>
+<td>28 天（通过变更历史）</td>
+</tr>
+<tr>
+<td><code>conversion_lags_{date_iso}</code></td>
+<td>素材转化延迟数据</td>
+<td>5 天（从最近可用快照复制）</td>
+</tr>
+<tr>
+<td><code>ad_group_approval_statuses_{date_iso}</code></td>
+<td>广告组审核快照</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>asset_approval_statuses_{date_iso}</code></td>
+<td>素材审核快照</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>asset_structure_snapshot</code></td>
+<td>结构快照</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>performance_grouping_snapshots</code></td>
+<td>效果分组快照</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="104">10.4 增量策略</h3>
+<p>当 <code>incremental=true</code> 时：
+1. 输出表获得 <code>_{date_iso}</code> 后缀
+2. <code>incremental_saving.sql</code> 将旧数据（start_date 之前）归档到 <code>_{yesterday_iso}</code>，新数据到 <code>_{date_iso}</code>
+3. <code>initial_load.sql</code> 处理首次历史数据加载
+4. <code>check_missing_incremental_snapshot</code> 检测间隔并调整 start_date
+5. 通配符查询（<code>{table}_*</code>）跨所有日期后缀表读取</p>
+<hr />
+<h2 id="11_1">11. 部署方式</h2>
+<h3 id="111">11.1 本地执行</h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 安装依赖</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>app/requirements.txt
+
+<span class="c1"># 运行</span>
+bash<span class="w"> </span>app/run-local.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>app/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--google-ads-config<span class="w"> </span>google-ads.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--account-id<span class="w"> </span><span class="m">123</span>-456-7890
+</code></pre></div>
+<p><strong>前提条件</strong>：
+- Python 3.11+，已安装 <code>gaarf</code> CLI 工具
+- <code>google-ads.yaml</code>（含 OAuth 凭据）
+- GCP 项目（已启用 BigQuery 访问）</p>
+<h3 id="112-docker">11.2 Docker 本地</h3>
+<p><strong>Dockerfile</strong>（根目录）：
+- 基础镜像：<code>python:3.11-slim-buster</code>
+- 使用 <code>uv</code> 包管理器加速依赖安装
+- 入口：<code>./app/run-local.sh --quiet</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># docker-compose.yaml 挂载三个卷</span>
+docker-compose<span class="w"> </span>run<span class="w"> </span>arp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--google-ads-config<span class="w"> </span>/google-ads.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>/app_reporting_pack.yaml
+</code></pre></div>
+<h3 id="113-gcp">11.3 GCP 云端部署</h3>
+<p><code>gcp/setup.sh</code> 自动化完整部署流水线：</p>
+<div class="language-text highlight"><pre><span></span><code>┌──────────────┐    ┌─────────────┐    ┌──────────────┐
+│ Cloud        │───►│ Pub/Sub     │───►│ Cloud        │
+│ Scheduler    │    │ Topic       │    │ Function     │
+│ (每天午夜)    │    │             │    │ (create-vm)  │
+└──────────────┘    └─────────────┘    └──────┬───────┘
+                                              │
+                                              ▼
+                                     ┌──────────────┐
+                                     │ Compute      │
+                                     │ Engine VM    │
+                                     │ (临时, 运行   │
+                                     │  Docker 容器) │
+                                     └──────┬───────┘
+                                              │
+                                     ┌────────▼───────┐
+                                     │ BigQuery       │
+                                     │ (输出表)        │
+                                     └────────────────┘
+</code></pre></div>
+<p><strong>部署步骤</strong>：
+1. <code>enable_apis</code> — 启用 BigQuery、Compute、Artifact Registry、Cloud Functions 等 API
+2. <code>set_iam_permissions</code> — 授予 Compute SA 必要角色
+3. <code>deploy_files</code> — 上传应用脚本和配置到 GCS
+4. <code>create_registry</code> — 创建 Artifact Registry Docker 仓库
+5. <code>build_docker_image</code> — 通过 Cloud Build 构建并推送镜像
+6. <code>deploy_cf</code> — 部署 Cloud Function（Pub/Sub 触发）
+7. <code>schedule_run</code> — 创建 Cloud Scheduler 定时任务</p>
+<p><strong>安装一键命令</strong>：
+<div class="language-bash highlight"><pre><span></span><code>bash<span class="w"> </span>gcp/install.sh
+</code></pre></div></p>
+<p><strong>升级</strong>：
+<div class="language-bash highlight"><pre><span></span><code>bash<span class="w"> </span>gcp/upgrade.sh
+</code></pre></div></p>
+<hr />
+<h2 id="12_1">12. 测试体系</h2>
+<h3 id="121">12.1 单元测试</h3>
+<p>位于 <code>tests/unit/</code>，使用 <code>pytest</code>：</p>
+<ul>
+<li><code>test_backfill_snapshots.py</code> — 测试出价/预算历史恢复、队列快照回填、边界条件处理</li>
+<li>测试数据：<code>tests/unit/data/</code> 下的 YAML 配置夹具</li>
+<li><code>pytest.ini</code> 设置 <code>pythonpath=app</code> 以直接导入脚本</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/unit/
+</code></pre></div>
+<h3 id="122">12.2 端到端测试</h3>
+<p>位于 <code>tests/end-to-end/test_app.py</code>：</p>
+<ul>
+<li><strong>需要真实 GCP 项目和 Google Ads 账户</strong></li>
+<li>环境变量：<code>ARP_TEST_ACCOUNT</code>、<code>ARP_TEST_PROJECT</code></li>
+<li>使用 Jinja2 模板（<code>.j2</code> 文件）生成测试配置</li>
+<li>测试场景：</li>
+<li><code>test_core_module_with_no_missing_runs</code> — 模拟 3 天连续运行，验证增量快照</li>
+<li><code>test_core_module_with_one_missing_run</code> — 模拟跳过 1 天运行，验证间隔恢复</li>
+<li>验证查询：<code>validation_query_core.sql</code>、<code>validation_query_full.sql</code></li>
+<li>清理：测试后删除 BQ 数据集</li>
+</ul>
+<h3 id="123-gaql">12.3 GAQL 查询验证</h3>
+<div class="language-bash highlight"><pre><span></span><code>bash<span class="w"> </span>tests/test_google_queries.sh
+</code></pre></div>
+<p>使用 <code>gaarf-simulator</code> 验证所有 GAQL 查询的语法正确性，无需实际 API 调用。</p>
+<h3 id="124-cicd">12.4 CI/CD 工作流</h3>
+<p><strong><code>test-google-ads-queries.yaml</code></strong>：
+- 触发：推送到 <code>**/google_ads_queries/*.sql</code> 文件或每日定时
+- 矩阵策略：测试 API 版本 19、20、21</p>
+<p><strong><code>test-scripts.yaml</code></strong>：
+- 触发：推送到 <code>app/scripts/**</code> 文件
+- 运行 <code>pytest tests/unit/</code></p>
+<p><strong><code>pre-commit</code></strong>（<code>.pre-commit-config.yaml</code>）：
+- SQL 文件末尾空行检查
+- YAML 格式验证
+- 大文件检测</p>
+<hr />
+<h2 id="13_1">13. 从零开发步骤</h2>
+<h3 id="131">13.1 环境准备</h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 1. 克隆项目</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/google-marketing-solutions/app-reporting-pack.git
+<span class="nb">cd</span><span class="w"> </span>app-reporting-pack
+
+<span class="c1"># 2. 创建 Python 虚拟环境</span>
+python3.11<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+
+<span class="c1"># 3. 安装依赖</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>app/requirements.txt
+
+<span class="c1"># 4. 准备 Google Ads API 凭据</span>
+<span class="c1"># 创建 google-ads.yaml（参考 Google Ads API 文档）</span>
+</code></pre></div>
+<h3 id="132">13.2 配置</h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 1. 从模板创建配置</span>
+cp<span class="w"> </span>app/config.yaml.template<span class="w"> </span>app/config.yaml
+
+<span class="c1"># 2. 编辑配置（设置 GCP 项目、数据集、账户 ID）</span>
+vi<span class="w"> </span>app/config.yaml
+</code></pre></div>
+<h3 id="133">13.3 首次运行</h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 带交互提示的完整运行</span>
+bash<span class="w"> </span>app/run-local.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>app/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--google-ads-config<span class="w"> </span>google-ads.yaml
+
+<span class="c1"># 仅运行特定模块</span>
+bash<span class="w"> </span>app/run-local.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>app/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--google-ads-config<span class="w"> </span>google-ads.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--modules<span class="w"> </span>core,assets
+
+<span class="c1"># 静默模式（无交互提示）</span>
+bash<span class="w"> </span>app/run-local.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>app/config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--google-ads-config<span class="w"> </span>google-ads.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--quiet
+</code></pre></div>
+<h3 id="134">13.4 添加新模块</h3>
+<ol>
+<li>
+<p>创建模块目录结构：
+<div class="language-bash highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>app/new_module/google_ads_queries
+mkdir<span class="w"> </span>-p<span class="w"> </span>app/new_module/bq_queries/<span class="o">{</span>views,snapshots,incremental,legacy_views<span class="o">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>编写 GAQL 查询（<code>app/new_module/google_ads_queries/your_query.sql</code>）</p>
+</li>
+<li>
+<p>编写 BQ 转换查询（<code>app/new_module/bq_queries/your_output.sql</code>）</p>
+</li>
+<li>
+<p>在 <code>run-local.sh</code> 的 <code>run_with_config()</code> 函数中添加模块调用：
+<div class="language-bash highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">modules</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">&quot;new_module&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>run_google_ads_queries<span class="w"> </span><span class="s2">&quot;new_module&quot;</span>
+<span class="w">  </span>run_bq_queries<span class="w"> </span><span class="s2">&quot;new_module&quot;</span>
+<span class="k">fi</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>将模块名称添加到默认模块列表或通过 <code>--modules</code> 显式启用</p>
+</li>
+</ol>
+<h3 id="135">13.5 添加新查询</h3>
+<p><strong>添加 GAQL 查询</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="c1">-- app/{module}/google_ads_queries/new_query.sql</span>
+<span class="k">SELECT</span>
+<span class="w">  </span><span class="n">campaign</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">campaign_id</span><span class="p">,</span>
+<span class="w">  </span><span class="n">segments</span><span class="p">.</span><span class="nb">date</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span>
+<span class="w">  </span><span class="n">metrics</span><span class="p">.</span><span class="n">clicks</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">clicks</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">campaign</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">campaign</span><span class="p">.</span><span class="n">advertising_channel_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;MULTI_CHANNEL&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">segments</span><span class="p">.</span><span class="nb">date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="ss">&quot;{start_date}&quot;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">segments</span><span class="p">.</span><span class="nb">date</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="ss">&quot;{end_date}&quot;</span>
+</code></pre></div></p>
+<p><strong>添加 BQ 输出查询</strong>：
+<div class="language-sql highlight"><pre><span></span><code><span class="c1">-- app/{module}/bq_queries/new_output.sql</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">incremental</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="ss">&quot;true&quot;</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">target_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">new_output_</span><span class="err">{</span><span class="n">date_iso</span><span class="err">}</span><span class="o">`</span><span class="w"> </span><span class="k">AS</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">target_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">new_output</span><span class="o">`</span><span class="w"> </span><span class="k">AS</span>
+<span class="err">{</span><span class="o">%</span><span class="w"> </span><span class="n">endif</span><span class="w"> </span><span class="o">%</span><span class="err">}</span>
+<span class="k">SELECT</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="k">FROM</span><span class="w"> </span><span class="o">`</span><span class="err">{</span><span class="n">bq_dataset</span><span class="err">}</span><span class="p">.</span><span class="n">raw_table</span><span class="o">`</span>
+</code></pre></div></p>
+<h3 id="136-gcp">13.6 GCP 部署</h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 一键安装（首次）</span>
+bash<span class="w"> </span>gcp/install.sh
+
+<span class="c1"># 升级现有部署</span>
+bash<span class="w"> </span>gcp/upgrade.sh
+</code></pre></div>
+<hr />
+<h2 id="14">14. 常见问题与排障</h2>
+<h3 id="q1-gaarf">Q1: gaarf 命令找不到？</h3>
+<div class="language-bash highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>google-ads-api-report-fetcher<span class="o">[</span>bq<span class="o">]</span>
+</code></pre></div>
+<h3 id="q2-api">Q2: API 版本不兼容？</h3>
+<p>检查 <code>config.yaml</code> 中的 <code>api_version</code> 设置。当前支持版本：19、20、21。升级 API 版本后需运行 <code>gaarf-simulator</code> 验证查询：
+<div class="language-bash highlight"><pre><span></span><code>bash<span class="w"> </span>tests/test_google_queries.sh
+</code></pre></div></p>
+<h3 id="q3">Q3: 增量快照间隔导致数据缺失？</h3>
+<p>使用 <code>--initial-load</code> 重新执行历史数据加载，或使用 <code>--reset-incremental-performance-snapshots</code> 重置增量快照。</p>
+<h3 id="q4-skan">Q4: SKAN 数据全是占位符？</h3>
+<p>确认 <code>config.yaml</code> 中 <code>skan_mode.mode</code> 设置为 <code>table</code> 并提供了有效的 <code>skan_schema_input_table</code>。</p>
+<h3 id="q5">Q5: 出价/预算变更历史缺失？</h3>
+<p>确保 <code>--backfill</code> 标志已启用（默认启用）。变更历史 API 仅保留最近 28 天数据。</p>
+<h3 id="q6-docker">Q6: Docker 构建失败？</h3>
+<p>确保使用 Python 3.11 兼容的基础镜像。检查 <code>requirements.txt</code> 是否有 hash 不匹配：
+<div class="language-bash highlight"><pre><span></span><code>pip-compile<span class="w"> </span>--generate-hashes<span class="w"> </span>app/requirements.in<span class="w"> </span>-o<span class="w"> </span>app/requirements.txt
+</code></pre></div></p>
+<h3 id="q7-bigquery">Q7: BigQuery 权限不足？</h3>
+<p>确保服务账户具有以下角色：
+- <code>roles/bigquery.dataEditor</code>
+- <code>roles/bigquery.jobUser</code>
+- 对目标数据集的 <code>WRITER</code> 权限</p>
+<h3 id="q8">Q8: 如何添加自定义转化列？</h3>
+<p>在 <code>config.yaml</code> 的 <code>gaarf-bq.params.template</code> 下添加 <code>custom_conversions</code> 列表：
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">params</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">custom_conversions</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_conversion_action_1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;my_conversion_action_2&quot;</span>
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright Google 2025
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.footer", "navigation.tracking", "navigation.top", "navigation.path", "content.code.annotate", "content.code.select", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
