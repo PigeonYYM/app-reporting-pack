@@ -42,7 +42,6 @@ AS (
        VD.conversions AS conversions,
        VD.view_through_conversions AS view_through_conversions,
        VD.conversions_value AS conversions_value,
-       VD.video_views AS video_views,
        VD.video_trueview_views AS video_trueview_views,
        VD.p100_views_rate * VD.impressions AS p100_views,
        VD.p25_views_rate * VD.impressions AS p25_views,

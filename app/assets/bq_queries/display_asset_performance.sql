@@ -19,7 +19,6 @@ AS (
        DIS.clicks AS clicks,
        DIS.impressions AS impressions,
        ROUND(IEEE_DIVIDE(CAST(DIS.cost AS FLOAT64), 1000000.0), 3) AS cost,
-       DIS.video_views AS video_views,
        DIS.video_trueview_views AS video_trueview_views,
        DIS.p25_views_rate * DIS.impressions AS p25_views,
        DIS.p50_views_rate * DIS.impressions AS p50_views,
