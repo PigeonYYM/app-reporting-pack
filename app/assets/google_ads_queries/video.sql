@@ -28,6 +28,7 @@ SELECT
   metrics.view_through_conversions AS view_through_conversions,
   metrics.conversions_value AS conversions_value,
   metrics.video_views AS video_views,
+  metrics.video_trueview_views AS video_trueview_views,
   metrics.video_quartile_p100_rate AS p100_views_rate,
   metrics.video_quartile_p25_rate AS p25_views_rate,
   metrics.video_quartile_p50_rate AS p50_views_rate,
