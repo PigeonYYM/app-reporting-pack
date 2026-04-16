@@ -28,9 +28,9 @@ OBSOLETE_CONFIG=0
 _check_api_version() {
     local api_version=$(cat /tmp/arp.yaml | grep api_version |\
         cut -d ":" -f2 | grep -oE '[0-9]+([.][0-9]+)?')
-    if (( $api_version < 17 )); then
+    if (( $api_version < 19 )); then
         echo "Unsupported API version."
-        echo "Recommended to update to Google Ads API 18."
+        echo "Recommended to update to Google Ads API 21."
         OBSOLETE_CONFIG=$(($OBSOLETE_CONFIG+1))
     fi
 }
@@ -69,10 +69,10 @@ _check_section_presense() {
 
 
 check_installation() {
-    gsutil -q stat $CGS_APP_CONFIG_FILE
+    gcloud storage objects list --stat --fetch-encrypted-object-hashes $CGS_APP_CONFIG_FILE
     config_exists=$?
     if [[ $config_exists -eq 0 ]]; then
-        gsutil cat $CGS_APP_CONFIG_FILE | tee /tmp/arp.yaml
+        gcloud storage cat $CGS_APP_CONFIG_FILE | tee /tmp/arp.yaml
     else
         echo "App reporting pack isn't installed in project $PROJECT_ID"
         echo "Please install it with './gcp/install.sh' command."
@@ -103,11 +103,12 @@ if (( $OBSOLETE_CONFIG > 0 )); then
     echo -e "${CYAN}Generating configuration...${WHITE}"
     RUNNING_IN_GCE=true
     ./app/run-local.sh --generate-config-only
+    echo -e "${CYAN}Upgrading application config...${WHITE}"
+    ./gcp/setup.sh copy_application_config
 fi
 
 # deploy solution
 echo -e "${CYAN}Upgrading application...${WHITE}"
-./gcp/setup.sh copy_application_scripts build_docker_image_gcr start
+./gcp/setup.sh copy_application_scripts build_docker_image
 
 popd >/dev/null
-

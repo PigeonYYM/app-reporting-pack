@@ -102,7 +102,7 @@ parse_yaml() {
    local yaml_file="$1"
    local prefix="$2"
    if [[ $yaml_file =~ "gs://" ]]; then
-     gsutil cat $yaml_file > /tmp/remote_app_reporting_pack.yaml
+     gcloud storage cat $yaml_file > /tmp/remote_app_reporting_pack.yaml
      yaml_file=/tmp/remote_app_reporting_pack.yaml
    fi
    while read line; do
@@ -125,10 +125,10 @@ check_gaarf_version() {
     if [[ $major_version -lt 1 ]]; then
       require_newer_gaarf
     fi
-    if [[ $minor_version -lt 15 ]]; then
+    if [[ $minor_version -lt 18 ]]; then
       require_newer_gaarf
     fi
-    if [[ $minor_version -eq 15 && $patch_version -lt 1 ]]; then
+    if [[ $minor_version -eq 18 && $patch_version -lt 2 ]]; then
       require_newer_gaarf
     fi
     echo "google-ads-api-report-fetcher is up-to-date"

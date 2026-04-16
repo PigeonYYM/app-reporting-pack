@@ -50,7 +50,7 @@ AS (
           PARSE_DATE('%Y-%m-%d', CS.date)
             = LA.adjustment_date
           AND CS.network = LA.network
-          AND CS.conversion_id = LA.conversion_id
+          AND CAST(CS.conversion_id AS INT64) = LA.conversion_id
       GROUP BY 1, 2, 3
     ),
     MappingTable AS (

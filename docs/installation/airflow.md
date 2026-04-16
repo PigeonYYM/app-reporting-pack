@@ -1,6 +1,3 @@
-# Running App Reporting Pack in Apache Airflow
-
-
 Running App Reporting Pack queries in Apache Airflow is easy.
 You'll need to provide three arguments for running `DockerOperator` inside your DAG:
 
@@ -15,7 +12,7 @@ You'll need to provide three arguments for running `DockerOperator` inside your 
 > Don't forget to change `/path/to/google-ads.yaml`, `path/to/service_account.json`
 > and `path/to/app_reporting_pack.yaml` with valid paths.
 
-```
+```python
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.docker.operators.docker import DockerOperator
@@ -23,7 +20,7 @@ from docker.types import Mount
 
 
 default_args = {
-    'description'           : 'https://github.com/google/app-reporting-pack',
+    'description'           : 'https://github.com/google-marketing-solutions/app-reporting-pack',
     'depend_on_past'        : False,
     'start_date'            : datetime(2023, 3, 1),
     'email_on_failure'      : False,
@@ -31,7 +28,11 @@ default_args = {
     'retries'               : 1,
     'retry_delay'           : timedelta(minutes=5)
 }
-with DAG('app_reporting_pack_local', default_args=default_args, schedule_interval="* 0 * * *", catchup=False) as dag:
+with DAG(
+    'app_reporting_pack_local',
+    default_args=default_args,
+    schedule_interval="* 0 * * *",
+    catchup=False) as dag:
     app_reporting_pack = DockerOperator(
         task_id='app_reporting_pack_docker',
         image='ghcr.io/google-marketing-solutions/app-reporting-pack:latest',
@@ -63,9 +64,11 @@ with DAG('app_reporting_pack_local', default_args=default_args, schedule_interva
 
 ### Getting configuration files from Google Cloud Storage
 
-> Don't forget to change `gs://path/to/google-ads.yaml`, `path/to/service_account.json`
-> and `path/to/app_reporting_pack.yaml` with valid paths.
-```
+!!! important
+    Don't forget to change `gs://path/to/google-ads.yaml`, `path/to/service_account.json`
+    and `path/to/app_reporting_pack.yaml` with valid paths.
+
+```python
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.docker.operators.docker import DockerOperator
@@ -73,7 +76,7 @@ from docker.types import Mount
 
 
 default_args = {
-    'description'           : 'https://github.com/google/app-reporting-pack',
+    'description'           : 'https://github.com/google-marketing-solutions/app-reporting-pack',
     'depend_on_past'        : False,
     'start_date'            : datetime(2023, 3, 1),
     'email_on_failure'      : False,
@@ -81,7 +84,11 @@ default_args = {
     'retries'               : 1,
     'retry_delay'           : timedelta(minutes=5)
 }
-with DAG('app_reporting_pack_remote', default_args=default_args, schedule_interval="* 0 * * *", catchup=False) as dag:
+with DAG(
+    'app_reporting_pack_remote',
+    default_args=default_args,
+    schedule_interval="* 0 * * *",
+    catchup=False) as dag:
     app_reporting_pack = DockerOperator(
         task_id='app_reporting_pack_docker',
         image='ghcr.io/google-marketing-solutions/app-reporting-pack:latest',
@@ -107,4 +114,5 @@ with DAG('app_reporting_pack_remote', default_args=default_args, schedule_interv
     )
     app_reporting_pack
 ```
+
 
