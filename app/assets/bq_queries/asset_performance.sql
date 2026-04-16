@@ -258,6 +258,7 @@ AS (
     SUM(CS.inapps_adjusted) AS inapps_adjusted,
     SUM(AP.view_through_conversions) AS view_through_conversions,
     SUM(AP.conversions_value) AS conversions_value,
+    SUM(AP.video_trueview_views) AS video_trueview_views,
     {% for custom_conversion in custom_conversions %}
     {% for conversion_alias, conversion_name in custom_conversion.items() %}
     SUM(COALESCE(CCS.conversions_{{conversion_alias}}, 0))

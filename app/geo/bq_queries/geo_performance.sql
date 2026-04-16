@@ -75,6 +75,7 @@ AS (
     SUM(CS.installs) AS installs,
     SUM(CS.inapps) AS inapps,
     SUM(GP.video_views) AS video_views,
+    SUM(GP.video_trueview_views) AS video_trueview_views,
     SUM(GP.interactions) AS interactions,
     SUM(GP.conversions_value) AS conversions_value
   FROM `{bq_dataset}.geo_performance` AS GP

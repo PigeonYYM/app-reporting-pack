@@ -22,6 +22,7 @@ SELECT
     metrics.clicks AS clicks,
     metrics.cost_micros AS cost,
     metrics.video_views AS video_views,
+    metrics.video_trueview_views AS video_trueview_views,
     metrics.interactions AS interactions,
     metrics.conversions_value AS conversions_value
 FROM user_location_view

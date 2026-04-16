@@ -98,7 +98,7 @@ SELECT
     inapps_30_day AS inapps_30_day,
     conversions_value_30_day AS conversions_value_30_day,
     NULL AS video_views,
-    NULL AS video_trueview_views,
+    video_trueview_views AS video_trueview_views,
     NULL AS p100_views,
     NULL AS p25_views,
     NULL AS p50_views,
