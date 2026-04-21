@@ -31,7 +31,6 @@ IF has_asset THEN
   SET create_sql = create_sql || '''
 
 SELECT
-    GENERATE_UUID() as uuid,
     day AS date,
     CAST(account_id AS STRING) AS account_id,
     account_name AS account_name,
@@ -110,7 +109,6 @@ ELSEIF has_video THEN
   SET create_sql = create_sql || '''
 
 SELECT
-    GENERATE_UUID() as uuid,
     PARSE_DATE('%F', date) AS date,
     CAST(account_id AS STRING) AS account_id,
     account_name AS account_name,
@@ -189,7 +187,6 @@ ELSEIF has_display THEN
   SET create_sql = create_sql || '''
 
 SELECT
-    GENERATE_UUID() as uuid,
     PARSE_DATE('%F', date) AS date,
     CAST(account_id AS STRING) AS account_id,
     account_name AS account_name,
@@ -271,7 +268,6 @@ IF has_video AND base_added != 'video' THEN
 UNION ALL
 
 SELECT
-    GENERATE_UUID() as uuid,
     PARSE_DATE('%F', date) AS date,
     CAST(account_id AS STRING) AS account_id,
     account_name AS account_name,
@@ -353,7 +349,6 @@ IF has_display AND base_added != 'display' THEN
 UNION ALL
 
 SELECT
-    GENERATE_UUID() as uuid,
     PARSE_DATE('%F', date) AS date,
     CAST(account_id AS STRING) AS account_id,
     account_name AS account_name,
@@ -434,7 +429,6 @@ IF base_added = '' THEN
   SET create_sql = create_sql || '''
 
 SELECT
-    GENERATE_UUID() as uuid,
     CAST(NULL AS DATE) AS date,
     CAST(NULL AS STRING) AS account_id,
     CAST(NULL AS STRING) AS account_name,
