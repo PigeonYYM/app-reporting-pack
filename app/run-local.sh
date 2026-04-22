@@ -479,6 +479,10 @@ run_with_config() {
     define_runtime_config "aggregate_performance"
     run_bq_queries "aggregate"
   fi
+  if [[ $modules =~ "overwrite_tables" ]]; then
+    echo -e "${COLOR}===Running 'overwrite_tables' module===${NC}"
+    run_bq_queries "overwrite_tables"
+  fi
   upload_last_run_to_bq
 }
 
