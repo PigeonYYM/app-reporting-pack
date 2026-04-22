@@ -236,10 +236,7 @@ AS (
         ACS.bidding_strategy IN ('Installs', 'Installs Advanced'),
         0,
         `{bq_dataset}.NormalizeMillis`(AP.cost))) AS cost_non_install_campaigns,
-    SUM(
-       IF(ACS.campaign_type = 'MULTI_CHANNEL', IF(ACS.bidding_strategy = 'Installs', AP.installs, AP.inapps), AP.conversions)
-       )
-      AS conversions,
+    SUM(AP.conversions) AS conversions,
     SUM(AP.installs) AS installs,
     SUM(CS.installs_adjusted) AS installs_adjusted,
     SUM(AP.inapps) AS inapps,
