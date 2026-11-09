@@ -14,6 +14,38 @@
 
 -- Contains performance (clicks, impressions, installs, inapps, etc) on asset_id level
 -- segmented by network (Search, Display, YouTube).
+{% set xday_event_suffixes = {'paying_users': 'payer', 'payment_count': 'revenue', 'payment_amount': 'revenue', 'retained_users': 'retain'} %}
+{% set default_xday_events = {} %}
+{% for day in range(1, 8) %}
+{% for metric, suffix in xday_event_suffixes.items() %}
+{% set _ = default_xday_events.update({metric ~ '_' ~ day ~ '_day': {'conversion_name': 'g_s2s_d' ~ day ~ '_' ~ suffix}}) %}
+{% endfor %}
+{% endfor %}
+{% set xday_events = {} %}
+{% for mapping in xday_conversions | default([default_xday_events]) %}
+{% for column, event in mapping.items() %}
+ASSERT {{ (column not in xday_events) | lower }}
+  AS 'Duplicate xday_conversions output column';
+{% set _ = xday_events.update({column: event}) %}
+{% endfor %}
+{% endfor %}
+{% set xday_metrics = ['paying_users', 'payment_count', 'payment_amount', 'retained_users'] %}
+{% set xday_value_fields = ['conversions', 'conversions_value', 'all_conversions', 'all_conversions_value'] %}
+{% set xday_columns = [] %}
+{% for day in range(1, 8) %}
+{% for metric in xday_metrics %}
+{% set _ = xday_columns.append(metric ~ '_' ~ day ~ '_day') %}
+{% endfor %}
+{% endfor %}
+{% for column, event in xday_events.items() %}
+ASSERT {{ (column in xday_columns) | lower }}
+  AS 'Unknown xday_conversions output column';
+ASSERT {{ ((event.get('conversion_name') is not none) != (event.get('conversion_id') is not none)) | lower }}
+  AS 'Each xday_conversions entry must specify exactly one conversion_name or conversion_id';
+ASSERT {{ (event.get('value_field', 'conversions') in xday_value_fields) | lower }}
+  AS 'xday_conversions value_field must be conversions, conversions_value, all_conversions or all_conversions_value';
+{% endfor %}
+
 CREATE TEMP FUNCTION GetCohort(arr ARRAY<FLOAT64>, day INT64)
 RETURNS FLOAT64
 AS (
@@ -137,6 +169,44 @@ AS (
         conversion_name
       FROM `{bq_dataset}.app_conversions_mapping`
     ),
+    {% if xday_events %}
+    -- These events already encode their day window at collection time.
+    -- Aggregate their reported measurements without applying conversion lag.
+    XDayConversions AS (
+      SELECT
+        C.date,
+        `{bq_dataset}.ConvertAdNetwork`(C.network) AS network,
+        C.ad_group_id,
+        C.asset_id,
+        `{bq_dataset}.ConvertAssetFieldType`(C.field_type) AS field_type,
+        {% for day in range(1, 8) %}
+        {% for metric in xday_metrics %}
+        {% set column = metric ~ '_' ~ day ~ '_day' %}
+        {% set event = xday_events.get(column) %}
+        {% if event %}
+        {% set value_field = event.get('value_field', 'conversions_value' if metric == 'payment_amount' else 'conversions') %}
+        CAST(SUM(CASE
+          {% if event.get('conversion_id') is not none %}
+          WHEN CAST(C.conversion_id AS STRING) = {{ event.conversion_id | string | tojson | replace('{', '\\u007b') | replace('}', '\\u007d') }}
+          {% else %}
+          WHEN EXISTS (
+            SELECT 1 FROM ConversionMapping AS CM
+            WHERE CAST(CM.conversion_id AS STRING) = CAST(C.conversion_id AS STRING)
+              AND CM.conversion_name = {{ event.conversion_name | tojson | replace('{', '\\u007b') | replace('}', '\\u007d') }}
+          )
+          {% endif %}
+          THEN COALESCE(C.{{ value_field if value_field in xday_value_fields else 'conversions' }}, 0)
+          ELSE 0
+        END) AS FLOAT64) AS {{column}},
+        {% else %}
+        CAST(NULL AS FLOAT64) AS {{column}},
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+      FROM `{bq_dataset}.asset_conversion_split` AS C
+      GROUP BY 1, 2, 3, 4, 5
+    ),
+    {% endif %}
     CustomConvSplit AS (
       SELECT
         C.date,
@@ -244,6 +314,17 @@ AS (
     SUM(AP.view_through_conversions) AS view_through_conversions,
     SUM(AP.conversions_value) AS conversions_value,
     SUM(AP.video_trueview_views) AS video_trueview_views,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {% set column = metric ~ '_' ~ day ~ '_day' %}
+    {% if xday_events.get(column) %}
+    -- XDC is already aggregated at this output grain, even if AP has multiple rows.
+    CAST(COALESCE(MAX(XDC.{{column}}), 0) AS FLOAT64) AS {{column}},
+    {% else %}
+    CAST(NULL AS FLOAT64) AS {{column}},
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
     {% for custom_conversion in custom_conversions %}
     {% for conversion_alias, conversion_name in custom_conversion.items() %}
     SUM(COALESCE(CCS.conversions_{{conversion_alias}}, 0))
@@ -300,6 +381,15 @@ AS (
       AND AP.network = CCS.network
       AND AP.asset_id = CCS.asset_id
       AND AP.field_type = CCS.field_type
+  {% if xday_events %}
+  LEFT JOIN XDayConversions AS XDC
+    ON
+      AP.date = XDC.date
+      AND AP.ad_group_id = XDC.ad_group_id
+      AND `{bq_dataset}.ConvertAdNetwork`(AP.network) = XDC.network
+      AND AP.asset_id = XDC.asset_id
+      AND `{bq_dataset}.ConvertAssetFieldType`(AP.field_type) = XDC.field_type
+  {% endif %}
   GROUP BY
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32

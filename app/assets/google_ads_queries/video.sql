@@ -15,6 +15,7 @@
 # Get video information on each youtube video
 SELECT
   segments.date as date,
+  customer.id AS account_id,
   campaign.id as campaign_id,
   campaign.advertising_channel_type as campaign_type,
   ad_group.id as ad_group_id,
@@ -34,6 +35,6 @@ SELECT
   metrics.video_quartile_p75_rate AS p75_views_rate
 FROM video
 WHERE
-    campaign.advertising_channel_type in ("VIDEO", "DISPLAY")
+    campaign.advertising_channel_type = "VIDEO"
     AND segments.date >= "{start_date}"
     AND segments.date <= "{end_date}"

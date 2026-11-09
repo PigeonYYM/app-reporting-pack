@@ -1,3 +1,4 @@
+{% set xday_metrics = ['paying_users', 'payment_count', 'payment_amount', 'retained_users'] %}
 DECLARE create_sql STRING;
 DECLARE has_asset BOOL DEFAULT FALSE;
 DECLARE has_video BOOL DEFAULT FALSE;
@@ -96,6 +97,11 @@ SELECT
     installs_30_day AS installs_30_day,
     inapps_30_day AS inapps_30_day,
     conversions_value_30_day AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {{metric}}_{{day}}_day AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     video_trueview_views AS video_trueview_views,
     NULL AS p100_views,
     NULL AS p25_views,
@@ -117,7 +123,7 @@ SELECT
     CAST(campaign_id AS STRING) AS campaign_id,
     campaign_name AS campaign_name,
     NULL AS campaign_status,
-    'VIDEO' AS campaign_type,
+    campaign_type AS campaign_type,
     NULL AS geos,
     NULL AS language,
     NULL AS app_id,
@@ -174,6 +180,11 @@ SELECT
     NULL AS installs_30_day,
     NULL AS inapps_30_day,
     NULL AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {{metric}}_{{day}}_day AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     video_trueview_views AS video_trueview_views,
     p100_views AS p100_views,
     p25_views AS p25_views,
@@ -206,8 +217,8 @@ SELECT
     CAST(ad_group_id AS STRING) AS ad_group_id,
     ad_group_name AS ad_group_name,
     NULL AS ad_group_status,
-    NULL AS ad_id,
-    NULL AS ad_name,
+    CAST(ad_id AS STRING) AS ad_id,
+    ad_name AS ad_name,
     CAST(ad_id AS STRING) AS asset_id,
     ad_name AS asset,
     NULL AS asset_link,
@@ -221,7 +232,7 @@ SELECT
     NULL AS performance_label,
     NULL AS asset_status,
     NULL AS asset_dimensions,
-    NULL AS network,
+    network AS network,
     clicks AS clicks,
     impressions AS impressions,
     cost AS cost,
@@ -252,6 +263,11 @@ SELECT
     NULL AS installs_30_day,
     NULL AS inapps_30_day,
     NULL AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {{metric}}_{{day}}_day AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     video_trueview_views AS video_trueview_views,
     p100_views AS p100_views,
     p25_views AS p25_views,
@@ -276,7 +292,7 @@ SELECT
     CAST(campaign_id AS STRING) AS campaign_id,
     campaign_name AS campaign_name,
     NULL AS campaign_status,
-    'VIDEO' AS campaign_type,
+    campaign_type AS campaign_type,
     NULL AS geos,
     NULL AS language,
     NULL AS app_id,
@@ -333,6 +349,11 @@ SELECT
     NULL AS installs_30_day,
     NULL AS inapps_30_day,
     NULL AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {{metric}}_{{day}}_day AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     video_trueview_views AS video_trueview_views,
     p100_views AS p100_views,
     p25_views AS p25_views,
@@ -368,8 +389,8 @@ SELECT
     CAST(ad_group_id AS STRING) AS ad_group_id,
     ad_group_name AS ad_group_name,
     NULL AS ad_group_status,
-    NULL AS ad_id,
-    NULL AS ad_name,
+    CAST(ad_id AS STRING) AS ad_id,
+    ad_name AS ad_name,
     CAST(ad_id AS STRING) AS asset_id,
     ad_name AS asset,
     NULL AS asset_link,
@@ -383,7 +404,7 @@ SELECT
     NULL AS performance_label,
     NULL AS asset_status,
     NULL AS asset_dimensions,
-    NULL AS network,
+    network AS network,
     clicks AS clicks,
     impressions AS impressions,
     cost AS cost,
@@ -414,6 +435,11 @@ SELECT
     NULL AS installs_30_day,
     NULL AS inapps_30_day,
     NULL AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    {{metric}}_{{day}}_day AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     video_trueview_views AS video_trueview_views,
     p100_views AS p100_views,
     p25_views AS p25_views,
@@ -494,6 +520,11 @@ SELECT
     CAST(NULL AS INT64) AS installs_30_day,
     CAST(NULL AS INT64) AS inapps_30_day,
     CAST(NULL AS FLOAT64) AS conversions_value_30_day,
+    {% for day in range(1, 8) %}
+    {% for metric in xday_metrics %}
+    CAST(NULL AS FLOAT64) AS {{metric}}_{{day}}_day,
+    {% endfor %}
+    {% endfor %}
     CAST(NULL AS FLOAT64) AS video_trueview_views,
     CAST(NULL AS FLOAT64) AS p100_views,
     CAST(NULL AS FLOAT64) AS p25_views,

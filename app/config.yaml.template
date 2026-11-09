@@ -24,7 +24,7 @@ gaarf:
   account:
   - 'YOUR_MCC_ID'
   customer_ids_query: SELECT customer.id FROM campaign WHERE campaign.advertising_channel_type
-    = "MULTI_CHANNEL"
+    IN ("MULTI_CHANNEL", "DEMAND_GEN", "SEARCH", "VIDEO", "DISPLAY")
   params:
     macro:
       start_date: :YYYYMMDD-91
@@ -40,6 +40,38 @@ gaarf-bq:
       start_date: :YYYYMMDD-91
     template:
       cohort_days: 0,1,3,5,7,14,30
+      # Events already encode day 1..7; no conversion-lag split is applied.
+      # These mappings are also used when xday_conversions is omitted.
+      # Set xday_conversions: [{}] to disable. See docs/customization/xday-conversions.md.
+      xday_conversions:
+        - paying_users_1_day: {conversion_name: g_s2s_d1_payer, value_field: conversions}
+        - payment_count_1_day: {conversion_name: g_s2s_d1_revenue, value_field: conversions}
+        - payment_amount_1_day: {conversion_name: g_s2s_d1_revenue, value_field: conversions_value}
+        - retained_users_1_day: {conversion_name: g_s2s_d1_retain, value_field: conversions}
+        - paying_users_2_day: {conversion_name: g_s2s_d2_payer, value_field: conversions}
+        - payment_count_2_day: {conversion_name: g_s2s_d2_revenue, value_field: conversions}
+        - payment_amount_2_day: {conversion_name: g_s2s_d2_revenue, value_field: conversions_value}
+        - retained_users_2_day: {conversion_name: g_s2s_d2_retain, value_field: conversions}
+        - paying_users_3_day: {conversion_name: g_s2s_d3_payer, value_field: conversions}
+        - payment_count_3_day: {conversion_name: g_s2s_d3_revenue, value_field: conversions}
+        - payment_amount_3_day: {conversion_name: g_s2s_d3_revenue, value_field: conversions_value}
+        - retained_users_3_day: {conversion_name: g_s2s_d3_retain, value_field: conversions}
+        - paying_users_4_day: {conversion_name: g_s2s_d4_payer, value_field: conversions}
+        - payment_count_4_day: {conversion_name: g_s2s_d4_revenue, value_field: conversions}
+        - payment_amount_4_day: {conversion_name: g_s2s_d4_revenue, value_field: conversions_value}
+        - retained_users_4_day: {conversion_name: g_s2s_d4_retain, value_field: conversions}
+        - paying_users_5_day: {conversion_name: g_s2s_d5_payer, value_field: conversions}
+        - payment_count_5_day: {conversion_name: g_s2s_d5_revenue, value_field: conversions}
+        - payment_amount_5_day: {conversion_name: g_s2s_d5_revenue, value_field: conversions_value}
+        - retained_users_5_day: {conversion_name: g_s2s_d5_retain, value_field: conversions}
+        - paying_users_6_day: {conversion_name: g_s2s_d6_payer, value_field: conversions}
+        - payment_count_6_day: {conversion_name: g_s2s_d6_revenue, value_field: conversions}
+        - payment_amount_6_day: {conversion_name: g_s2s_d6_revenue, value_field: conversions_value}
+        - retained_users_6_day: {conversion_name: g_s2s_d6_retain, value_field: conversions}
+        - paying_users_7_day: {conversion_name: g_s2s_d7_payer, value_field: conversions}
+        - payment_count_7_day: {conversion_name: g_s2s_d7_revenue, value_field: conversions}
+        - payment_amount_7_day: {conversion_name: g_s2s_d7_revenue, value_field: conversions_value}
+        - retained_users_7_day: {conversion_name: g_s2s_d7_retain, value_field: conversions}
       has_skan: 'false' # Change to 'true' is have SKAN schema
       incremental: 'false' # Change to 'true' is you want to store performance data incrementally
 scripts:
