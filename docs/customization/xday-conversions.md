@@ -10,14 +10,20 @@
 `display_asset_performance`、`aggregate_asset_performance` 及最终的
 `aggregate_asset_performance_overwrite_di` 均包含以下 28 列，X 取 1～7：
 
-| 字段 | 指标 | 默认事件名 | 取值字段 |
+| 字段 | 指标 | 默认事件 token | 取值字段 |
 | --- | --- | --- | --- |
-| `paying_users_X_day` | X 日付费人数 | `g_s2s_dX_payer` | `conversions` |
-| `payment_count_X_day` | X 日付费次数 | `g_s2s_dX_revenue` | `conversions` |
-| `payment_amount_X_day` | X 日付费金额 | `g_s2s_dX_revenue` | `conversions_value` |
-| `retained_users_X_day` | X 日留存用户数 | `g_s2s_dX_retain` | `conversions` |
+| `paying_users_X_day` | X 日付费人数 | `s2s_dX_payer` | `conversions` |
+| `payment_count_X_day` | X 日付费次数 | `s2s_dX_revenue` | `conversions` |
+| `payment_amount_X_day` | X 日付费金额 | `s2s_dX_revenue` | `conversions_value` |
+| `retained_users_X_day` | X 日留存用户数 | `s2s_dX_retain` | `conversions` |
 
-例如 `g_s2s_d1_revenue` 同时提供 1 日付费次数与 1 日付费金额，分别读取
+默认映射通过边界受控的正则匹配完整 Google Ads 转化操作名称中的事件 token，
+同时兼容带 `g_` 前缀的 `g_s2s_dX_*`。例如
+`com.bhk.newslgkr (Android) s2s_d1_payer 2026-11-18T14:51:32.373`
+会映射到 D1 付费人数；`s2s_d10_payer`、`s2s_d1_payer_extra` 和
+`prefix_s2s_d1_payer` 不会被误当成 D1 付费人数。
+
+例如 `s2s_d1_revenue` 同时提供 1 日付费次数与 1 日付费金额，分别读取
 `conversions` 和 `conversions_value`；D2～D7 使用同样的命名规则。
 这里的字段名来自现有素材转化数据表，对应 Google Ads 的同名指标。
 
@@ -39,16 +45,16 @@ gaarf-bq:
     template:
       xday_conversions:
         - paying_users_1_day:
-            conversion_name: g_s2s_d1_payer
+            conversion_name_regex: '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d1_payer(?:[^A-Za-z0-9_]|$)'
             value_field: conversions
         - payment_count_1_day:
-            conversion_name: g_s2s_d1_revenue
+            conversion_name_regex: '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d1_revenue(?:[^A-Za-z0-9_]|$)'
             value_field: conversions
         - payment_amount_1_day:
-            conversion_name: g_s2s_d1_revenue
+            conversion_name_regex: '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d1_revenue(?:[^A-Za-z0-9_]|$)'
             value_field: conversions_value
         - retained_users_1_day:
-            conversion_name: g_s2s_d1_retain
+            conversion_name_regex: '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d1_retain(?:[^A-Za-z0-9_]|$)'
             value_field: conversions
 ```
 
@@ -56,11 +62,14 @@ gaarf-bq:
 可从配置模板复制完整 28 项，再按需修改。
 配置必须使用上述列表格式，每个输出字段只能配置一次。
 如需停用全部新指标，设置 `xday_conversions: [{}]`；不要使用空字典或空列表。
-每项必须只指定 `conversion_name` 或 `conversion_id` 中的一个：
+每项必须只指定 `conversion_name`、`conversion_name_regex` 或 `conversion_id` 中的一个：
 
 - `conversion_name` 精确匹配 Google Ads 转化操作名称。原素材路径通过
   `app_conversions_mapping.conversion_name` 匹配；VIDEO、DISPLAY 直接匹配事件明细中的 `conversion_name`。
   它可能与 Firebase 或第三方归因平台的原始事件名不同。
+- `conversion_name_regex` 使用 BigQuery RE2 正则匹配完整转化操作名称，适用于名称中带包名、
+  平台或时间戳的情况。默认规则的边界为字符串首尾或非字母、数字、下划线字符，
+  事件 token 的 `g_` 前缀可有可无；不要改成无边界的 `LIKE '%_d%'`，以免误配其他事件。
 - `conversion_id` 精确匹配转化 ID，支持整数或字符串；推荐在事件名称可能重复时使用。
 - `value_field` 可选，支持 `conversions`、`conversions_value`、
   `all_conversions` 和 `all_conversions_value`。
@@ -69,15 +78,23 @@ gaarf-bq:
 
 ```yaml
 - payment_amount_1_day:
-    conversion_name: g_s2s_d1_revenue
+    conversion_name_regex: '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d1_revenue(?:[^A-Za-z0-9_]|$)'
     value_field: all_conversions_value
 ```
+
+若旧运行配置已经显式写出 `conversion_name: g_s2s_dX_*`，需改为当前模板中的
+`conversion_name_regex`，或删除整组 `xday_conversions` 以使用内置默认映射。
+只升级代码不会改写已有的显式配置。
 
 可从现有事件映射表查询名称和 ID：
 
 ```sql
 SELECT DISTINCT conversion_id, conversion_name, conversion_type, conversion_source
 FROM `YOUR_PROJECT.arp.app_conversions_mapping`
+WHERE REGEXP_CONTAINS(
+  conversion_name,
+  '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d[1-7]_(?:payer|revenue|retain)(?:[^A-Za-z0-9_]|$)'
+)
 ORDER BY conversion_name, conversion_id;
 ```
 

@@ -120,6 +120,10 @@ class XDayConversionsTest(unittest.TestCase):
         self.db.row_factory = sqlite3.Row
         self.db.create_function("ConvertAdNetwork", 1, lambda value: value)
         self.db.create_function("ConvertAssetFieldType", 1, lambda value: value)
+        self.db.create_function(
+            "REGEXP_CONTAINS", 2,
+            lambda value, pattern: bool(re.search(pattern, value or "")),
+        )
         self.db.executescript("""
             CREATE TABLE asset_conversion_split (
                 date TEXT, network TEXT, ad_group_id INTEGER, asset_id INTEGER,
@@ -146,7 +150,7 @@ class XDayConversionsTest(unittest.TestCase):
             (*grain, conversion_id, count, all_count, value, all_value),
         )
 
-    def add_reported_xday_events(self):
+    def add_reported_xday_events(self, name_factory=None):
         """Create 21 real events; each revenue event supplies two measurements."""
         expected = {}
         for day in range(1, 8):
@@ -157,9 +161,13 @@ class XDayConversionsTest(unittest.TestCase):
             )
             for index, (event, count, value) in enumerate(events):
                 conversion_id = day * 10 + index
+                name = (
+                    name_factory(day, event) if name_factory
+                    else f"g_s2s_d{day}_{event}"
+                )
                 self.db.execute(
                     "INSERT INTO app_conversions_mapping VALUES (?, ?)",
-                    (conversion_id, f"g_s2s_d{day}_{event}"),
+                    (conversion_id, name),
                 )
                 self.add_event(conversion_id, count, value)
             expected.update({
@@ -197,6 +205,42 @@ class XDayConversionsTest(unittest.TestCase):
         self.assertEqual(row["cost"], 24)
         self.assertEqual({column: row[column] for column in COLUMNS}, expected)
 
+    def test_default_mapping_matches_event_tokens_in_full_ads_names(self):
+        expected = self.add_reported_xday_events(
+            lambda day, event: (
+                f"com.bhk.newslgkr (Android) s2s_d{day}_{event} "
+                "2026-11-18T14:51:32.373"
+            )
+        )
+        decoys = (
+            "com.bhk.newslgkr (Android) s2s_d10_payer 2026-11-18T14:51:32.373",
+            "com.bhk.newslgkr (Android) s2s_d1_payer_extra 2026-11-18T14:51:32.373",
+            "com.bhk.newslgkr (Android) prefix_s2s_d1_payer 2026-11-18T14:51:32.373",
+        )
+        for conversion_id, name in enumerate(decoys, start=1000):
+            self.db.execute(
+                "INSERT INTO app_conversions_mapping VALUES (?, ?)",
+                (conversion_id, name),
+            )
+            self.add_event(conversion_id, 1000000, 1000000)
+
+        row, = self.evaluate()
+
+        self.assertEqual({column: row[column] for column in COLUMNS}, expected)
+
+    def test_conversion_name_selector_remains_exact(self):
+        self.db.execute(
+            "INSERT INTO app_conversions_mapping VALUES (?, ?)",
+            (101, "prefix g_s2s_d1_payer suffix"),
+        )
+        self.add_event(101, 1000000)
+
+        row, = self.evaluate({
+            "paying_users_1_day": {"conversion_name": "g_s2s_d1_payer"}
+        })
+
+        self.assertEqual(row["paying_users_1_day"], 0)
+
     def test_explicit_config_template_matches_default_events_and_fields(self):
         expected = self.add_reported_xday_events()
         # The checked-in template uses single-line mappings with plain values.
@@ -220,7 +264,12 @@ class XDayConversionsTest(unittest.TestCase):
                 for key, value in [field.split(":", 1)]
             )
             metric, day, _ = column.rsplit("_", 2)
-            self.assertEqual(event["conversion_name"], f"g_s2s_d{day}_{event_types[metric]}")
+            expected_regex = (
+                rf"(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d{day}_{event_types[metric]}"
+                r"(?:[^A-Za-z0-9_]|$)"
+            )
+            self.assertEqual(event.get("conversion_name_regex"), expected_regex)
+            self.assertNotIn("conversion_name", event)
             default_field = "conversions_value" if metric == "payment_amount" else "conversions"
             self.assertEqual(event.get("value_field", default_field), default_field)
             mapping.append({column: event})
@@ -464,6 +513,10 @@ class NonAppXDayConversionsTest(unittest.TestCase):
         self.db.row_factory = sqlite3.Row
         self.db.create_function("ConvertAdNetwork", 1, lambda value: value)
         self.db.create_function("IEEE_DIVIDE", 2, lambda left, right: left / right)
+        self.db.create_function(
+            "REGEXP_CONTAINS", 2,
+            lambda value, pattern: bool(re.search(pattern, value or "")),
+        )
 
         class AnyValue:
             def __init__(self):
@@ -595,6 +648,38 @@ class NonAppXDayConversionsTest(unittest.TestCase):
                     row, = self.evaluate(kind, incremental=incremental)
                     self.assertEqual({column: row[column] for column in COLUMNS}, expected)
                     self.assertEqual(row["cost"], 1)
+
+    def test_default_matching_handles_full_ads_names_without_overmatching(self):
+        for kind in self.SOURCES:
+            with self.subTest(kind=kind):
+                self.add_performance(kind)
+                for index, (event, count, value) in enumerate((
+                    ("payer", 2.5, 999),
+                    ("revenue", 3.5, 12.75),
+                    ("retain", 4.5, 999),
+                )):
+                    self.add_event(
+                        kind, count, value, conversion_id=101 + index,
+                        name=(
+                            f"com.bhk.newslgkr (Android) s2s_d1_{event} "
+                            "2026-11-18T14:51:32.373"
+                        ),
+                    )
+                for index, event in enumerate((
+                    "s2s_d10_payer", "s2s_d1_payer_extra", "prefix_s2s_d1_payer",
+                )):
+                    self.add_event(
+                        kind, 1000000, 1000000, conversion_id=1000 + index,
+                        name=f"com.bhk.newslgkr (Android) {event} 2026-11-18T14:51:32.373",
+                    )
+
+                row, = self.evaluate(kind)
+
+                self.assertEqual(row["paying_users_1_day"], 2.5)
+                self.assertEqual(row["payment_count_1_day"], 3.5)
+                self.assertEqual(row["payment_amount_1_day"], 12.75)
+                self.assertEqual(row["retained_users_1_day"], 4.5)
+                self.assertEqual(row["cost"], 1)
 
     def test_each_source_grain_is_isolated_including_video_reuse_across_ads(self):
         for kind, (_, _, dimensions, base) in self.SOURCES.items():
@@ -735,6 +820,9 @@ class XDayOutputSchemaTest(unittest.TestCase):
         invalid_mappings = (
             {"payment_count_8_day": {"conversion_id": 101}},
             {"payment_count_1_day": {"conversion_id": 101, "conversion_name": "event"}},
+            {"payment_count_1_day": {"conversion_id": 101, "conversion_name_regex": "s2s"}},
+            {"payment_count_1_day": {"conversion_name": "event", "conversion_name_regex": "s2s"}},
+            {"payment_count_1_day": {}},
             {"payment_count_1_day": {"conversion_id": 101, "value_field": "cost"}},
         )
         for path in (ASSET_SQL, VIDEO_SQL, DISPLAY_SQL):

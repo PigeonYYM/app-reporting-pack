@@ -17,7 +17,7 @@
 {% set default_xday_events = {} %}
 {% for day in range(1, 8) %}
 {% for metric, suffix in xday_event_suffixes.items() %}
-{% set _ = default_xday_events.update({metric ~ '_' ~ day ~ '_day': {'conversion_name': 'g_s2s_d' ~ day ~ '_' ~ suffix}}) %}
+{% set _ = default_xday_events.update({metric ~ '_' ~ day ~ '_day': {'conversion_name_regex': '(?:^|[^A-Za-z0-9_])(?:g_)?s2s_d' ~ day ~ '_' ~ suffix ~ '(?:[^A-Za-z0-9_]|$)'}}) %}
 {% endfor %}
 {% endfor %}
 {% set xday_events = {} %}
@@ -39,8 +39,9 @@ ASSERT {{ (column not in xday_events) | lower }}
 {% for column, event in xday_events.items() %}
 ASSERT {{ (column in xday_columns) | lower }}
   AS 'Unknown xday_conversions output column';
-ASSERT {{ ((event.get('conversion_name') is not none) != (event.get('conversion_id') is not none)) | lower }}
-  AS 'Each xday_conversions entry must specify exactly one conversion_name or conversion_id';
+{% set selector_count = (event.get('conversion_name') is not none) | int + (event.get('conversion_name_regex') is not none) | int + (event.get('conversion_id') is not none) | int %}
+ASSERT {{ (selector_count == 1) | lower }}
+  AS 'Each xday_conversions entry must specify exactly one conversion_name, conversion_name_regex or conversion_id';
 ASSERT {{ (event.get('value_field', 'conversions') in xday_value_fields) | lower }}
   AS 'xday_conversions value_field must be conversions, conversions_value, all_conversions or all_conversions_value';
 {% endfor %}
@@ -77,6 +78,11 @@ AS (
         CAST(SUM(CASE
           {% if event.get('conversion_id') is not none %}
           WHEN CAST(C.conversion_id AS STRING) = {{ event.conversion_id | string | tojson | replace('{', '\\u007b') | replace('}', '\\u007d') }}
+          {% elif event.get('conversion_name_regex') is not none %}
+          WHEN REGEXP_CONTAINS(
+            C.conversion_name,
+            {{ event.conversion_name_regex | tojson | replace('{', '\\u007b') | replace('}', '\\u007d') }}
+          )
           {% else %}
           WHEN C.conversion_name = {{ event.conversion_name | tojson | replace('{', '\\u007b') | replace('}', '\\u007d') }}
           {% endif %}
